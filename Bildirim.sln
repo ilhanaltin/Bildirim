@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bildirim.Domain.Entity", "Bildirim.Domain.Entity\Bildirim.Domain.Entity.csproj", "{3AE79C4D-E91B-4BAD-8F82-3A3A9DDA324F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bildirim.Domain.Model", "Bildirim.Domain.Model\Bildirim.Domain.Model.csproj", "{C71BD61C-AA9B-43D9-B74D-882A33885ED4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bildirim.Infrastructure.Main", "Bildirim.Infrastructure.Main\Bildirim.Infrastructure.Main.csproj", "{C0926E12-3222-4E46-A346-1DB058E1EBCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bildirim.Presentation.Api", "Bildirim.Presentation.Api\Bildirim.Presentation.Api.csproj", "{7BA4181C-06C0-4675-A71D-B2C74828C87F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bildirim.App.Migrations", "Bildirim.App.Migrations\Bildirim.App.Migrations.csproj", "{D27C9FF2-13E0-4D19-B0FB-AD109EFBA31D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bildirim.Common", "Bildirim.Common\Bildirim.Common.csproj", "{868CDAA8-3E31-44C6-99CE-681D4125EB02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AE79C4D-E91B-4BAD-8F82-3A3A9DDA324F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AE79C4D-E91B-4BAD-8F82-3A3A9DDA324F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AE79C4D-E91B-4BAD-8F82-3A3A9DDA324F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AE79C4D-E91B-4BAD-8F82-3A3A9DDA324F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C71BD61C-AA9B-43D9-B74D-882A33885ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C71BD61C-AA9B-43D9-B74D-882A33885ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C71BD61C-AA9B-43D9-B74D-882A33885ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C71BD61C-AA9B-43D9-B74D-882A33885ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0926E12-3222-4E46-A346-1DB058E1EBCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0926E12-3222-4E46-A346-1DB058E1EBCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0926E12-3222-4E46-A346-1DB058E1EBCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0926E12-3222-4E46-A346-1DB058E1EBCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BA4181C-06C0-4675-A71D-B2C74828C87F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BA4181C-06C0-4675-A71D-B2C74828C87F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BA4181C-06C0-4675-A71D-B2C74828C87F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BA4181C-06C0-4675-A71D-B2C74828C87F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D27C9FF2-13E0-4D19-B0FB-AD109EFBA31D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D27C9FF2-13E0-4D19-B0FB-AD109EFBA31D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D27C9FF2-13E0-4D19-B0FB-AD109EFBA31D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D27C9FF2-13E0-4D19-B0FB-AD109EFBA31D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868CDAA8-3E31-44C6-99CE-681D4125EB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CDAA8-3E31-44C6-99CE-681D4125EB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868CDAA8-3E31-44C6-99CE-681D4125EB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868CDAA8-3E31-44C6-99CE-681D4125EB02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC62B21A-6E6B-4566-A7DD-4C74A22F93DC}
+	EndGlobalSection
+EndGlobal

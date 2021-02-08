@@ -40,6 +40,15 @@ namespace Bildirim.Domain.Mapping.Blog
                 .IsRequired()
                 .HasColumnName("NOTIFICATION_STATUS_TYPE_ID");
 
+            builder.HasOne(t => t.Company)
+                .WithMany()
+                .HasForeignKey(t => t.CompanyId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(t => t.CompanyId)
+                .IsRequired()
+                .HasColumnName("COMPANY_ID");
+
             builder.HasOne(t => t.County)
                 .WithMany()
                 .HasForeignKey(t => t.CountyId)

@@ -1,5 +1,6 @@
 ﻿using Bildirim.Domain.Entity.Entities.Authorization;
 using Bildirim.Domain.Entity.Entities.Notify;
+using Bildirim.Domain.Entity.Entities.Shared;
 using Bildirim.Domain.Entity.Entities.Types;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,6 +26,13 @@ namespace Bildirim.App.Migrations
         public virtual DbSet<UserLoginType> UserLoginType { get; set; }
         public virtual DbSet<RoleType> RoleType { get; set; }
         public virtual DbSet<UserStatusType> UserStatusType { get; set; }
+
+
+        public virtual DbSet<Country> Country { get; set; }
+        public virtual DbSet<City> City { get; set; }
+        public virtual DbSet<County> County { get; set; }
+
+        public virtual DbSet<Company> Company { get; set; }
 
 
         #endregion

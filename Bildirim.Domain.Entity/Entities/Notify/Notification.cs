@@ -32,6 +32,10 @@ namespace Bildirim.Domain.Entity.Entities.Notify
 
         public int ReadCount { get; set; }
 
+        public long CompanyId { get; set; }
+
+        public virtual Company Company { get; set; }
+
         public long CountryId { get; set; }
 
         public virtual Country Country { get; set; }

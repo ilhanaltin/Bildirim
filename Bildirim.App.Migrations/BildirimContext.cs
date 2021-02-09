@@ -61,7 +61,7 @@ namespace Bildirim.App.Migrations
                 }
             }
 
-            //modelBuilder.Seed();
+            modelBuilder.Seed();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

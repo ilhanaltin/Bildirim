@@ -1,6 +1,8 @@
-﻿namespace Bildirim.Domain.Entity.Entities.Shared
+﻿using Bildirim.Domain.Entities.Entity;
+
+namespace Bildirim.Domain.Entity.Entities.Shared
 {
-    public class County
+    public class County : BaseEntity
     {
         public long CityId { get; set; }
 

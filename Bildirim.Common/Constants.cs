@@ -60,5 +60,60 @@ namespace Bildirim.Common
             }
             return "-";
         }
+
+        public const int COMPANY_GARANTI_BANKASI = 1;
+        public const int COMPANY_IS_BANKASI = 2;
+        public const int COMPANY_MEDIA_MARKT = 3;
+        public static string getCompanyString(long status)
+        {
+            switch (status)
+            {
+                case Constants.COMPANY_GARANTI_BANKASI:
+                    return "Garanti Bankası";
+
+                case Constants.COMPANY_IS_BANKASI:
+                    return "İş Bankası";
+
+                case Constants.COMPANY_MEDIA_MARKT:
+                    return "Media Markt";
+            }
+            return "-";
+        }
+
+        public const int NOTIFICATION_STATUS_TYPE_DELETED = 1;
+        public const int NOTIFICATION_STATUS_TYPE_WAITING_APPROVE = 2;
+        public const int NOTIFICATION_STATUS_TYPE_APPROVED = 3;
+
+        public static string getNotificationStatusString(long status)
+        {
+            switch (status)
+            {
+                case Constants.NOTIFICATION_STATUS_TYPE_DELETED:
+                    return "Silinmiş";
+
+                case Constants.NOTIFICATION_STATUS_TYPE_WAITING_APPROVE:
+                    return "Onay Bekliyor";
+
+                case Constants.NOTIFICATION_STATUS_TYPE_APPROVED:
+                    return "Onaylandı";
+            }
+            return "-";
+        }
+
+        public const int NOTIFICATION_TYPE_COMPAIGN_PERSONAL = 2;
+        public const int NOTIFICATION_TYPE_COMPAIGN_COMMERCIAL = 3;
+
+        public static string getNotificationStatusString(long status)
+        {
+            switch (status)
+            {
+                case Constants.NOTIFICATION_TYPE_COMPAIGN_PERSONAL:
+                    return "Kampanya/Bireysel";
+
+                case Constants.NOTIFICATION_TYPE_COMPAIGN_COMMERCIAL:
+                    return "Kampanya/Ticari";
+            }
+            return "-";
+        }
     }
 }

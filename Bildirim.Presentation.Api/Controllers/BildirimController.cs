@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bildirim.Common;
+using Bildirim.Domain.Entity.Entities.Notify;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -42,6 +44,8 @@ namespace Bildirim.Controllers
 
                         foreach (var node in nodes)
                         {
+                            var notify = new Notification();
+
                             var header = node.Attributes["data-text"].Value.FirstOrDefault();
 
                             var link = node.Descendants("a").Where(d => d.Attributes["class"].Value.Contains("direct"))
@@ -55,6 +59,20 @@ namespace Bildirim.Controllers
                             var logoImagePath = node.Descendants("img").Where(d => d.Attributes["class"].Value.Contains("campaign-box__brand-logo"))
                                                         .FirstOrDefault()
                                                         .Attributes["src"].Value;
+
+                            notify.Name = header;
+                            notify.CountryId = 1;
+                            notify.CreatedUserId = 1;
+                            notify.DetailLink = link;
+                            //notify.DetailText
+                            //notify.IconLink = 
+                            notify.LogoLink = logoImagePath;
+                            notify.MainImageLink = mainImagePath;
+                            notify.NotificationStatusTypeId = Constants.NOTIFICATION_STATUS_TYPE_WAITING_APPROVE;
+                            notify.NotificationTypeId = Constants.NOTIFICATION_TYPE_COMPAIGN_PERSONAL;
+                            //notify.StartDate
+                            //notify.EndDate
+
                         }
 
                         //var nodes = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'campaign-list check-box-list')]").ChildNodes;

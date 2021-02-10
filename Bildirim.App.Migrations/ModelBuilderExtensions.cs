@@ -55,6 +55,16 @@ namespace Bildirim.App.Migrations
 
             #endregion
 
+            #region Company
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company { Id = 1, Adi = "Garanti Bankası", CountryId=1, CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
+                new Company { Id = 2, Adi = "İş Bankası", CountryId = 1, CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
+                new Company { Id = 3, Adi = "Media Markt", CountryId = 1, CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
+            );
+
+            #endregion
+
             #region İl
 
             modelBuilder.Entity<City>().HasData(

@@ -10,6 +10,9 @@ namespace Bildirim.Domain.Mapping.Blog
         {
             builder.ToTable("T_NOTIFICATION");
 
+            builder.Property(t => t.Name)
+               .HasColumnName("NAME");
+
             builder.Property(t => t.DetailLink)
                .HasColumnName("DETAIL_LINK");
 

@@ -7,7 +7,8 @@ using System.Collections.Generic;
 namespace Bildirim.Domain.Entity.Entities.Notify
 {
     public class Notification : BaseEntity
-    {        
+    {
+        public string Name { get; set; }
         public string DetailLink { get; set; }
 
         public string MainImageLink { get; set; }

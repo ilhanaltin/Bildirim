@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bildirim.App.Migrations.Migrations
 {
     [DbContext(typeof(BildirimContext))]
-    [Migration("20210210124445_initial")]
+    [Migration("20210210144734_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -196,7 +196,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(910),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 663, DateTimeKind.Local).AddTicks(9853),
                             CreatedUserId = 1L,
                             Email = "ilhanaltin@gmail.com",
                             IsBlocked = false,
@@ -210,7 +210,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(3871),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(1730),
                             CreatedUserId = 1L,
                             Email = "yya@gmail.com",
                             IsBlocked = false,
@@ -224,7 +224,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(3885),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(1741),
                             CreatedUserId = 1L,
                             Email = "alivelikonya@gmail.com",
                             IsBlocked = false,
@@ -238,7 +238,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 4L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(3891),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(1745),
                             CreatedUserId = 1L,
                             Email = "kocahmet@msn.com",
                             IsBlocked = false,
@@ -252,7 +252,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 5L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(3902),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(1749),
                             CreatedUserId = 1L,
                             Email = "katanasapi@gmail.com",
                             IsBlocked = false,
@@ -266,7 +266,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 6L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(3908),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(1753),
                             CreatedUserId = 1L,
                             Email = "metinolyavrum@gmail.com",
                             IsBlocked = false,
@@ -280,7 +280,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 7L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(3915),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(1757),
                             CreatedUserId = 1L,
                             Email = "hasduruyi@outlook.com.tr",
                             IsBlocked = false,
@@ -294,7 +294,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 8L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(3921),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(1761),
                             CreatedUserId = 1L,
                             Email = "mermeresican@gmail.com",
                             IsBlocked = false,
@@ -308,7 +308,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 9L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(3927),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(1771),
                             CreatedUserId = 1L,
                             Email = "hacilarageldik@gmail.com",
                             IsBlocked = false,
@@ -323,7 +323,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 10L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(3933),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(1775),
                             CreatedUserId = 1L,
                             Email = "yellenenfiravun@gmail.com",
                             IsBlocked = false,
@@ -380,7 +380,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7503),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4103),
                             CreatedUserId = 1L,
                             RoleTypeId = 1L,
                             UserId = 1L
@@ -388,7 +388,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7527),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4113),
                             CreatedUserId = 1L,
                             RoleTypeId = 1L,
                             UserId = 2L
@@ -396,7 +396,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 3L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7533),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4117),
                             CreatedUserId = 1L,
                             RoleTypeId = 2L,
                             UserId = 3L
@@ -404,7 +404,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 4L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7537),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4119),
                             CreatedUserId = 1L,
                             RoleTypeId = 2L,
                             UserId = 4L
@@ -412,7 +412,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 5L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7541),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4122),
                             CreatedUserId = 1L,
                             RoleTypeId = 2L,
                             UserId = 5L
@@ -420,7 +420,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 6L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7545),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4125),
                             CreatedUserId = 1L,
                             RoleTypeId = 2L,
                             UserId = 6L
@@ -428,7 +428,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 7L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7550),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4127),
                             CreatedUserId = 1L,
                             RoleTypeId = 2L,
                             UserId = 7L
@@ -436,7 +436,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 8L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7555),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4130),
                             CreatedUserId = 1L,
                             RoleTypeId = 2L,
                             UserId = 8L
@@ -444,7 +444,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 9L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7561),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4132),
                             CreatedUserId = 1L,
                             RoleTypeId = 2L,
                             UserId = 9L
@@ -452,7 +452,7 @@ namespace Bildirim.App.Migrations.Migrations
                         new
                         {
                             Id = 10L,
-                            CreatedDateTime = new DateTime(2021, 2, 10, 15, 44, 42, 967, DateTimeKind.Local).AddTicks(7565),
+                            CreatedDateTime = new DateTime(2021, 2, 10, 17, 47, 32, 664, DateTimeKind.Local).AddTicks(4134),
                             CreatedUserId = 1L,
                             RoleTypeId = 2L,
                             UserId = 10L
@@ -562,6 +562,10 @@ namespace Bildirim.App.Migrations.Migrations
                     b.Property<string>("MainImageLink")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("MAIN_IMAGE_LINK");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NAME");
 
                     b.Property<long>("NotificationStatusTypeId")
                         .HasColumnType("bigint")
@@ -1497,6 +1501,32 @@ namespace Bildirim.App.Migrations.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("TT_COMPANY");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Adi = "Garanti Bankası",
+                            CountryId = 1L,
+                            CreatedDateTime = new DateTime(2021, 2, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedUserId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Adi = "İş Bankası",
+                            CountryId = 1L,
+                            CreatedDateTime = new DateTime(2021, 2, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedUserId = 1L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Adi = "Media Markt",
+                            CountryId = 1L,
+                            CreatedDateTime = new DateTime(2021, 2, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedUserId = 1L
+                        });
                 });
 
             modelBuilder.Entity("Bildirim.Domain.Entity.Entities.Shared.Country", b =>

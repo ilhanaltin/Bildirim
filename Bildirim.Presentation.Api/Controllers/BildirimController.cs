@@ -46,7 +46,7 @@ namespace Bildirim.Controllers
                         {
                             var notify = new Notification();
 
-                            var header = node.Attributes["data-text"].Value.FirstOrDefault();
+                            var header = node.Attributes["data-text"].Value;
 
                             var link = node.Descendants("a").Where(d => d.Attributes["class"].Value.Contains("direct"))
                                                 .FirstOrDefault()

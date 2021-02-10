@@ -103,7 +103,7 @@ namespace Bildirim.Common
         public const int NOTIFICATION_TYPE_COMPAIGN_PERSONAL = 2;
         public const int NOTIFICATION_TYPE_COMPAIGN_COMMERCIAL = 3;
 
-        public static string getNotificationStatusString(long status)
+        public static string getNotificationTypeString(long status)
         {
             switch (status)
             {

@@ -43,7 +43,7 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.HasOne(t => t.Company)
                 .WithMany()
                 .HasForeignKey(t => t.CompanyId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(t => t.CompanyId)
                 .IsRequired()
@@ -52,7 +52,7 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.HasOne(t => t.County)
                 .WithMany()
                 .HasForeignKey(t => t.CountyId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(t => t.CountyId)
                 .HasColumnName("COUNTY_ID");
@@ -60,7 +60,7 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.HasOne(t => t.City)
                 .WithMany()
                 .HasForeignKey(t => t.CityId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(t => t.CityId)
                 .HasColumnName("CITY_ID");
@@ -68,7 +68,7 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.HasOne(t => t.County)
                .WithMany()
                .HasForeignKey(t => t.CountryId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(t => t.CountryId)
                 .IsRequired()

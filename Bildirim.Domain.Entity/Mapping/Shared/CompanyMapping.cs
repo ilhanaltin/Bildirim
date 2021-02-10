@@ -17,7 +17,7 @@ namespace Bildirim.Domain.Entity.Mapping.Shared
             builder.HasOne(t => t.Country)
                .WithMany()
                .HasForeignKey(t => t.CountryId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(t => t.CountryId)
                 .IsRequired()

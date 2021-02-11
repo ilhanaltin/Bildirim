@@ -115,5 +115,8 @@ namespace Bildirim.Common
             }
             return "-";
         }
+
+        public static string[] monthNames = { "ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos", "eylül", "ekim", "kasım", "aralık" };
+
     }
 }

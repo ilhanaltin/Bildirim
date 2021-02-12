@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bildirim.Domain.Entity.Mapping.Shared
 {
-    public class CompanyMapping : IEntityTypeConfiguration<Company>
+    public class CompanyMapping : IEntityTypeConfiguration<Brand>
     {
-        public void Configure(EntityTypeBuilder<Company> builder)
+        public void Configure(EntityTypeBuilder<Brand> builder)
         {
             builder.ToTable("TT_COMPANY");
 

@@ -32,7 +32,7 @@ namespace Bildirim.App.Migrations
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<County> County { get; set; }
 
-        public virtual DbSet<Company> Company { get; set; }
+        public virtual DbSet<Brand> Company { get; set; }
 
 
         #endregion

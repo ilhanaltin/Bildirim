@@ -13,18 +13,6 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.Property(t => t.Name)
                .HasColumnName("NAME");
 
-            builder.Property(t => t.DetailLink)
-               .HasColumnName("DETAIL_LINK");
-
-            builder.Property(t => t.MainImageLink)
-               .HasColumnName("MAIN_IMAGE_LINK");
-
-            builder.Property(t => t.LogoLink)
-               .HasColumnName("LOGO_LINK");
-
-            builder.Property(t => t.IconLink)
-               .HasColumnName("ICON_LINK");
-
             builder.HasOne(t => t.NotificationType)
                 .WithMany()
                 .HasForeignKey(t => t.NotificationTypeId)
@@ -42,15 +30,6 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.Property(t => t.NotificationStatusTypeId)
                 .IsRequired()
                 .HasColumnName("NOTIFICATION_STATUS_TYPE_ID");
-
-            builder.HasOne(t => t.Company)
-                .WithMany()
-                .HasForeignKey(t => t.CompanyId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Property(t => t.CompanyId)
-                .IsRequired()
-                .HasColumnName("COMPANY_ID");
 
             builder.HasOne(t => t.County)
                 .WithMany()
@@ -76,17 +55,6 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.Property(t => t.CountryId)
                 .IsRequired()
                 .HasColumnName("COUNTRY_ID");
-
-            builder.Property(t => t.StartDate)
-               .HasColumnName("START_DATE");
-
-            builder.Property(t => t.EndDate)
-               .HasColumnName("END_DATE")
-               .IsRequired();
-
-            builder.Property(t => t.DetailText)
-               .HasColumnName("DETAIL_TEXT")
-               .IsRequired();
         }
     }
 }

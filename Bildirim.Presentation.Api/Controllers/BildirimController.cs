@@ -57,7 +57,7 @@ namespace Bildirim.Controllers
                             notify.CountryId = 1;
                             notify.CreatedUserId = 1;
 
-                            _unitOfWork.NotificationRepository.Add(notify);
+                            // _unitOfWork.NotificationRepository.Add(notify);
 
                             campaign.NotificationId = notify.Id;
 
@@ -102,6 +102,18 @@ namespace Bildirim.Controllers
                                         campaign.StartDate = startEndDate.StartDate;
                                         campaign.EndDate = startEndDate.EndDate;
 
+                                        var startEndDateOfBonusValidityDOM = nodeDetail.Descendants("p")
+                                                                       .Where(d => d.Attributes["class"] != null && d.Attributes["class"].Value.Contains("bonus-date"))
+                                                                       .FirstOrDefault();
+
+                                        if (startEndDateOfBonusValidityDOM != null)
+                                        {
+                                            var startEndDateOfBonusValidity = DateTimeHelper.GetStartEndDateFromString(startEndDateOfBonusValidityDOM.InnerHtml);
+
+                                            campaign.BonusValidityStartDate = startEndDateOfBonusValidity.StartDate;
+                                            campaign.BonusValidityEndDate = startEndDateOfBonusValidity.EndDate;
+                                        }
+
                                         var sectorAndBrand = nodeDetail.Descendants("div")
                                                 .Where(d => d.Attributes["class"] != null && d.Attributes["class"].Value.Contains("campaign-detail__brand-sector"))
                                                 .FirstOrDefault();
@@ -113,8 +125,8 @@ namespace Bildirim.Controllers
                                         var detailHtmlLeft = nodeDetail.Descendants("div")
                                                 .Where(d => d.Attributes["class"] != null && d.Attributes["class"].Value.Contains("campaign-detail__info campaign-detail__info--left"))
                                                 .FirstOrDefault();
-                                                
-                                        if(sectorAndBrand!=null)
+
+                                        if (sectorAndBrand != null)
                                         {
                                             detailHtmlLeft = detailHtmlLeft.RemoveChild(sectorAndBrand);
                                         }

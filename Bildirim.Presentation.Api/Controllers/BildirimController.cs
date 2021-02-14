@@ -44,6 +44,19 @@ namespace Bildirim.Controllers
                         var result = await content.ReadAsStringAsync();
                         var document = new HtmlAgilityPack.HtmlDocument();
                         document.LoadHtml(result);
+
+                        var nodesOfBrands = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'campaign-filter__selects-container')]");
+
+                        var optionsOfSectorAndBrand = nodesOfBrands.Descendants("select")
+                                .Where(d => d.Attributes["class"].Value
+                                .Contains("campaign-filter__select campaign-filter__select"))
+                                .ToList();
+
+                        var listOfSectors = optionsOfSectorAndBrand[0].InnerText.Split("\r\n").Select(s => s.Trim()).ToArray();
+                        var listOfBrands = optionsOfSectorAndBrand[1].InnerText.Split("\r\n").Select(s => s.Trim()).ToArray();
+
+
+
                         var nodes = document.DocumentNode.SelectNodes("//div[contains(@class, 'campaign-box check-box-item')]");
 
                         foreach (var node in nodes)
@@ -57,7 +70,7 @@ namespace Bildirim.Controllers
                             notify.CountryId = 1;
                             notify.CreatedUserId = 1;
 
-                            // _unitOfWork.NotificationRepository.Add(notify);
+                            _unitOfWork.NotificationRepository.Add(notify);
 
                             campaign.NotificationId = notify.Id;
 

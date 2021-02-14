@@ -8,6 +8,8 @@ namespace Bildirim.Domain.Mapping.Blog
     {        
         public void Configure(EntityTypeBuilder<Campaign> builder)
         {
+            builder.ToTable("T_CAMPAIGN");
+
             builder.HasOne(t => t.Notification)
                 .WithMany()
                 .HasForeignKey(t => t.NotificationId)
@@ -16,6 +18,16 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.Property(t => t.NotificationId)
                 .IsRequired()
                 .HasColumnName("NOTIFICATION_ID");
+
+
+            builder.HasOne(t => t.CampaignType)
+              .WithMany()
+              .HasForeignKey(t => t.CampaignTypeId)
+              .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(t => t.CampaignTypeId)
+                .IsRequired()
+                .HasColumnName("CAMPAIGN_TYPE_ID");
 
             builder.ToTable("T_CAMPAIGN");
 

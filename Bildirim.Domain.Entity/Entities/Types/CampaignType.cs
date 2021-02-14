@@ -2,7 +2,7 @@
 
 namespace Bildirim.Domain.Entity.Entities.Types
 {
-    public class NotificationType : BaseEntity
+    public class CampaignType : BaseEntity
     {
         public string Adi { get; set; }
     }

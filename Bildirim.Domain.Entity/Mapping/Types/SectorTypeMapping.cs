@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bildirim.Domain.Entity.Mapping.Types
 {
-    class NotificationTypeMapping : IEntityTypeConfiguration<NotificationType>
+    class SectorTypeMapping : IEntityTypeConfiguration<SectorType>
     {
-        public void Configure(EntityTypeBuilder<NotificationType> builder)
+        public void Configure(EntityTypeBuilder<SectorType> builder)
         {
-            builder.ToTable("TT_NOTIFICATION");
+            builder.ToTable("TT_SECTOR");
 
             builder.Property(ak => ak.Adi)
                 .HasColumnName("ADI")

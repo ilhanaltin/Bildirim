@@ -38,15 +38,7 @@ namespace Bildirim.App.Migrations
             );
 
             modelBuilder.Entity<NotificationType>().HasData(
-                new NotificationType { Id = 1, Adi = "Kampanya", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
-                new NotificationType { Id = 2, Adi = "Bireysel", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
-                new NotificationType { Id = 3, Adi = "Ticari",  CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
-            );
-
-            modelBuilder.Entity<SectorType>().HasData(
-                new SectorType { Id = 1, Adi = "Elektronik", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
-                new SectorType { Id = 2, Adi = "Beyaz Eşya", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
-                new SectorType { Id = 3, Adi = "E-Ticaret", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
+                new NotificationType { Id = 1, Adi = "Kampanya", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
             );
 
             #endregion
@@ -57,16 +49,6 @@ namespace Bildirim.App.Migrations
                 new Country { Id = 1, Adi = "Türkiye", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
                 new Country { Id = 2, Adi = "Amerika", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
                 new Country { Id = 3, Adi = "Almanya", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
-            );
-
-            #endregion
-
-            #region Company
-
-            modelBuilder.Entity<Company>().HasData(
-                new Company { Id = 1, Adi = "Garanti Bankası", CountryId = 1, CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
-                new Company { Id = 2, Adi = "İş Bankası", CountryId = 1, CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
-                new Company { Id = 3, Adi = "TEB", CountryId = 1, CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
             );
 
             #endregion

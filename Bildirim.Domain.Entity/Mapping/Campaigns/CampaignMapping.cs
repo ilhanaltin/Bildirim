@@ -19,16 +19,6 @@ namespace Bildirim.Domain.Mapping.Blog
                 .IsRequired()
                 .HasColumnName("NOTIFICATION_ID");
 
-
-            builder.HasOne(t => t.CampaignType)
-              .WithMany()
-              .HasForeignKey(t => t.CampaignTypeId)
-              .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Property(t => t.CampaignTypeId)
-                .IsRequired()
-                .HasColumnName("CAMPAIGN_TYPE_ID");
-
             builder.ToTable("T_CAMPAIGN");
 
             builder.Property(t => t.DetailLink)
@@ -43,14 +33,14 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.Property(t => t.IconLink)
                .HasColumnName("ICON_LINK");
 
-            builder.HasOne(t => t.Company)
+            builder.HasOne(t => t.OwnerBrand)
                 .WithMany()
-                .HasForeignKey(t => t.CompanyId)
+                .HasForeignKey(t => t.OwnerBrandId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Property(t => t.CompanyId)
+            builder.Property(t => t.OwnerBrandId)
                 .IsRequired()
-                .HasColumnName("COMPANY_ID");
+                .HasColumnName("OWNER_BRAND_ID");
 
             builder.HasOne(t => t.Brand)
                 .WithMany()
@@ -58,17 +48,15 @@ namespace Bildirim.Domain.Mapping.Blog
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(t => t.BrandId)
-                .IsRequired()
                 .HasColumnName("BRAND_ID");
 
-            builder.HasOne(t => t.SectorType)
+            builder.HasOne(t => t.Sector)
               .WithMany()
-              .HasForeignKey(t => t.SectorTypeId)
+              .HasForeignKey(t => t.SectorId)
               .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Property(t => t.SectorTypeId)
-                .IsRequired()
-                .HasColumnName("SECTOR_TYPE_ID");
+            builder.Property(t => t.SectorId)
+                .HasColumnName("SECTOR_ID");
 
             builder.Property(t => t.StartDate)
                .HasColumnName("START_DATE");

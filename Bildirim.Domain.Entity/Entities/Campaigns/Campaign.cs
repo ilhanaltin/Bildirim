@@ -12,10 +12,6 @@ namespace Bildirim.Domain.Entity.Entities.Campaigns
 
         public virtual Notification Notification { get; set; }
 
-        public long CampaignTypeId { get; set; }
-
-        public virtual CampaignType CampaignType { get; set; }
-
         public string DetailLink { get; set; }
 
         public string MainImageLink { get; set; }
@@ -34,16 +30,16 @@ namespace Bildirim.Domain.Entity.Entities.Campaigns
 
         public string DetailText { get; set; }
 
-        public long? CompanyId { get; set; }
+        public long OwnerBrandId { get; set; }
 
-        public virtual Company Company { get; set; }
+        public virtual Brand OwnerBrand { get; set; }
 
         public long? BrandId { get; set; }
 
         public virtual Brand Brand { get; set; }
 
-        public long? SectorTypeId { get; set; }
+        public long? SectorId { get; set; }
 
-        public virtual SectorType SectorType { get; set; }
+        public virtual Sector Sector { get; set; }
     }
 }

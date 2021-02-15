@@ -2,7 +2,7 @@
 
 namespace Bildirim.Domain.Entity.Entities.Shared
 {
-    public class Company : BaseEntity
+    public class Sector : BaseEntity
     {
         public long CountryId { get; set; }
 

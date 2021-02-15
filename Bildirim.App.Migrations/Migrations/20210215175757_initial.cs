@@ -27,23 +27,6 @@ namespace Bildirim.App.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TT_CAMPAIGN",
-                columns: table => new
-                {
-                    ID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ADI = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CREATED_DATE = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UPDATED_DATE = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CREATED_USER = table.Column<long>(type: "bigint", nullable: false),
-                    UPDATED_USER = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TT_CAMPAIGN", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TT_COUNTRY",
                 columns: table => new
                 {
@@ -130,23 +113,6 @@ namespace Bildirim.App.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TT_SECTOR",
-                columns: table => new
-                {
-                    ID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ADI = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CREATED_DATE = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UPDATED_DATE = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CREATED_USER = table.Column<long>(type: "bigint", nullable: false),
-                    UPDATED_USER = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TT_SECTOR", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TT_USER_STATUS",
                 columns: table => new
                 {
@@ -212,7 +178,7 @@ namespace Bildirim.App.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TT_COMPANY",
+                name: "TT_SECTOR",
                 columns: table => new
                 {
                     ID = table.Column<long>(type: "bigint", nullable: false)
@@ -226,9 +192,9 @@ namespace Bildirim.App.Migrations.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TT_COMPANY", x => x.ID);
+                    table.PrimaryKey("PK_TT_SECTOR", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_TT_COMPANY_TT_COUNTRY_COUNTRY_ID",
+                        name: "FK_TT_SECTOR_TT_COUNTRY_COUNTRY_ID",
                         column: x => x.COUNTRY_ID,
                         principalTable: "TT_COUNTRY",
                         principalColumn: "ID");
@@ -466,7 +432,6 @@ namespace Bildirim.App.Migrations.Migrations
                     ID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NOTIFICATION_ID = table.Column<long>(type: "bigint", nullable: false),
-                    CAMPAIGN_TYPE_ID = table.Column<long>(type: "bigint", nullable: false),
                     DETAIL_LINK = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MAIN_IMAGE_LINK = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LOGO_LINK = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -476,9 +441,9 @@ namespace Bildirim.App.Migrations.Migrations
                     BONUS_VALIDITY_START_DATE = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BONUS_VALIDITY_END_DATE = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DETAIL_TEXT = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    COMPANY_ID = table.Column<long>(type: "bigint", nullable: false),
-                    BRAND_ID = table.Column<long>(type: "bigint", nullable: false),
-                    SECTOR_TYPE_ID = table.Column<long>(type: "bigint", nullable: false),
+                    OWNER_BRAND_ID = table.Column<long>(type: "bigint", nullable: false),
+                    BRAND_ID = table.Column<long>(type: "bigint", nullable: true),
+                    SECTOR_ID = table.Column<long>(type: "bigint", nullable: true),
                     CREATED_DATE = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UPDATED_DATE = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CREATED_USER = table.Column<long>(type: "bigint", nullable: false),
@@ -499,18 +464,13 @@ namespace Bildirim.App.Migrations.Migrations
                         principalTable: "TT_BRAND",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_T_CAMPAIGN_TT_CAMPAIGN_CAMPAIGN_TYPE_ID",
-                        column: x => x.CAMPAIGN_TYPE_ID,
-                        principalTable: "TT_CAMPAIGN",
+                        name: "FK_T_CAMPAIGN_TT_BRAND_OWNER_BRAND_ID",
+                        column: x => x.OWNER_BRAND_ID,
+                        principalTable: "TT_BRAND",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_T_CAMPAIGN_TT_COMPANY_COMPANY_ID",
-                        column: x => x.COMPANY_ID,
-                        principalTable: "TT_COMPANY",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_T_CAMPAIGN_TT_SECTOR_SECTOR_TYPE_ID",
-                        column: x => x.SECTOR_TYPE_ID,
+                        name: "FK_T_CAMPAIGN_TT_SECTOR_SECTOR_ID",
+                        column: x => x.SECTOR_ID,
                         principalTable: "TT_SECTOR",
                         principalColumn: "ID");
                 });
@@ -550,9 +510,9 @@ namespace Bildirim.App.Migrations.Migrations
                 columns: new[] { "ID", "ADI", "CREATED_DATE", "CREATED_USER", "UPDATED_DATE", "UPDATED_USER" },
                 values: new object[,]
                 {
-                    { 1L, "Türkiye", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 2L, "Amerika", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 3L, "Almanya", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
+                    { 1L, "Türkiye", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
+                    { 2L, "Amerika", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
+                    { 3L, "Almanya", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -560,29 +520,24 @@ namespace Bildirim.App.Migrations.Migrations
                 columns: new[] { "ID", "ADI", "CREATED_DATE", "CREATED_USER", "UPDATED_DATE", "UPDATED_USER" },
                 values: new object[,]
                 {
-                    { 3L, "Facebook", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 2L, "Google", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 1L, "Normal", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
+                    { 1L, "Normal", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
+                    { 2L, "Google", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
+                    { 3L, "Facebook", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "TT_NOTIFICATION",
                 columns: new[] { "ID", "ADI", "CREATED_DATE", "CREATED_USER", "UPDATED_DATE", "UPDATED_USER" },
-                values: new object[,]
-                {
-                    { 1L, "Kampanya", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 2L, "Bireysel", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 3L, "Ticari", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
-                });
+                values: new object[] { 1L, "Kampanya", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null });
 
             migrationBuilder.InsertData(
                 table: "TT_NOTIFICATION_STATUS",
                 columns: new[] { "ID", "ADI", "CREATED_DATE", "CREATED_USER", "ParentId", "UPDATED_DATE", "UPDATED_USER" },
                 values: new object[,]
                 {
-                    { 1L, "Silinmiş", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, 0, null, null },
-                    { 2L, "Onay Bekliyor", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, 0, null, null },
-                    { 3L, "Onaylandı", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, 0, null, null }
+                    { 1L, "Silinmiş", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, 0, null, null },
+                    { 2L, "Onay Bekliyor", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, 0, null, null },
+                    { 3L, "Onaylandı", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, 0, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -590,18 +545,8 @@ namespace Bildirim.App.Migrations.Migrations
                 columns: new[] { "ID", "ADI", "CREATED_DATE", "CREATED_USER", "UPDATED_DATE", "UPDATED_USER" },
                 values: new object[,]
                 {
-                    { 2L, "Üye", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 1L, "Yönetici", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "TT_SECTOR",
-                columns: new[] { "ID", "ADI", "CREATED_DATE", "CREATED_USER", "UPDATED_DATE", "UPDATED_USER" },
-                values: new object[,]
-                {
-                    { 3L, "E-Ticaret", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 1L, "Elektronik", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 2L, "Beyaz Eşya", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
+                    { 1L, "Yönetici", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
+                    { 2L, "Üye", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -609,10 +554,10 @@ namespace Bildirim.App.Migrations.Migrations
                 columns: new[] { "ID", "ADI", "CREATED_DATE", "CREATED_USER", "UPDATED_DATE", "UPDATED_USER" },
                 values: new object[,]
                 {
-                    { 3L, "Kara Listede", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 1L, "Aktif", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 2L, "Silinmiş", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 4L, "Aktivasyon Bekliyor", new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
+                    { 1L, "Aktif", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
+                    { 2L, "Silinmiş", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
+                    { 3L, "Kara Listede", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
+                    { 4L, "Aktivasyon Bekliyor", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -634,7 +579,7 @@ namespace Bildirim.App.Migrations.Migrations
                     { 50L, "Nevşehir", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 50, null, null },
                     { 49L, "Muş", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 49, null, null },
                     { 48L, "Muğla", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 48, null, null },
-                    { 46L, "Kahramanmaraş", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 46, null, null },
+                    { 47L, "Mardin", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 47, null, null },
                     { 45L, "Manisa", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 45, null, null },
                     { 44L, "Malatya", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 44, null, null },
                     { 52L, "Ordu", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 52, null, null },
@@ -660,7 +605,7 @@ namespace Bildirim.App.Migrations.Migrations
                     { 65L, "Van", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 65, null, null },
                     { 43L, "Kütahya", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 43, null, null },
                     { 42L, "Konya", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 42, null, null },
-                    { 47L, "Mardin", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 47, null, null },
+                    { 46L, "Kahramanmaraş", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 46, null, null },
                     { 40L, "Kırşehir", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 40, null, null }
                 });
 
@@ -670,9 +615,9 @@ namespace Bildirim.App.Migrations.Migrations
                 values: new object[,]
                 {
                     { 18L, "Çankırı", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 18, null, null },
-                    { 17L, "Çanakkale", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 17, null, null },
-                    { 16L, "Bursa", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 16, null, null },
                     { 41L, "Kocaeli", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 41, null, null },
+                    { 16L, "Bursa", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 16, null, null },
+                    { 15L, "Burdur", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 15, null, null },
                     { 14L, "Bolu", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 14, null, null },
                     { 13L, "Bitlis", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 13, null, null },
                     { 12L, "Bingöl", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 12, null, null },
@@ -688,7 +633,7 @@ namespace Bildirim.App.Migrations.Migrations
                     { 2L, "Adıyaman", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 2, null, null },
                     { 19L, "Çorum", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 19, null, null },
                     { 20L, "Denizli", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 20, null, null },
-                    { 15L, "Burdur", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 15, null, null },
+                    { 17L, "Çanakkale", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 17, null, null },
                     { 22L, "Edirne", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 22, null, null },
                     { 39L, "Kırklareli", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 39, null, null },
                     { 38L, "Kayseri", 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 38, null, null },
@@ -711,13 +656,13 @@ namespace Bildirim.App.Migrations.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "TT_COMPANY",
-                columns: new[] { "ID", "ADI", "COUNTRY_ID", "CREATED_DATE", "CREATED_USER", "UPDATED_DATE", "UPDATED_USER" },
+                table: "T_USER",
+                columns: new[] { "ID", "CREATED_DATE", "CREATED_USER", "EMAIL", "IS_BLOCKED", "LASTNAME", "NAME", "NICKNAME", "PASSWORD", "SOCIAL_MEDIA_USER_ID", "UPDATED_DATE", "UPDATED_USER", "USER_LOGIN_TYPE_ID", "USER_STATUS_TYPE_ID" },
                 values: new object[,]
                 {
-                    { 3L, "TEB", 1L, new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 2L, "İş Bankası", 1L, new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null },
-                    { 1L, "Garanti Bankası", 1L, new DateTime(2021, 2, 14, 0, 0, 0, 0, DateTimeKind.Local), 1L, null, null }
+                    { 8L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(7699), 1L, "mermeresican@gmail.com", false, "MERMER", "Ömer", "mermeromer", "6d071901727aec1ba6d8e2497ef5b709", null, null, null, 1L, 1L },
+                    { 7L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(7694), 1L, "hasduruyi@outlook.com.tr", false, "DURUYI", "HAS", "HASDURUYI", "6c6e2722c24fd0c5d5153732c0776830", null, null, null, 1L, 1L },
+                    { 6L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(7687), 1L, "metinolyavrum@gmail.com", false, "OLYAVRUM", "METIN", "SenBen", "9456066bcb14f5c1fa388fda6310f38f", null, null, null, 1L, 1L }
                 });
 
             migrationBuilder.InsertData(
@@ -725,16 +670,13 @@ namespace Bildirim.App.Migrations.Migrations
                 columns: new[] { "ID", "CREATED_DATE", "CREATED_USER", "EMAIL", "IS_BLOCKED", "LASTNAME", "NAME", "NICKNAME", "PASSWORD", "SOCIAL_MEDIA_USER_ID", "UPDATED_DATE", "UPDATED_USER", "USER_LOGIN_TYPE_ID", "USER_STATUS_TYPE_ID" },
                 values: new object[,]
                 {
-                    { 9L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(9311), 1L, "hacilarageldik@gmail.com", false, "BABATEKKESI", "HACI", "ozontabakasi", "ad9187d4c31d650f97bbfecb52189053", "111423556560295556670", null, null, 2L, 1L },
-                    { 1L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(7427), 1L, "ilhanaltin@gmail.com", false, "ALTIN", "İlhan", "ilhanaltin", "e44f5f0bf7a453a731217f288641ab16", null, null, null, 1L, 1L },
-                    { 2L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(9270), 1L, "yya@gmail.com", false, "ALTIN", "Yiğityürek", "yigit", "e44f5f0bf7a453a731217f288641ab16", null, null, null, 1L, 1L },
-                    { 3L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(9279), 1L, "alivelikonya@gmail.com", false, "KONYA", "Ali Veli", "alivelikonya", "e44f5f0bf7a453a731217f288641ab16", null, null, null, 1L, 1L },
-                    { 4L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(9283), 1L, "kocahmet@msn.com", false, "KOÇ", "Ahmet", "kocero", "e44f5f0bf7a453a731217f288641ab16", null, null, null, 1L, 1L },
-                    { 5L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(9286), 1L, "katanasapi@gmail.com", false, "SAPI", "KATANA", "katanasapi", "ad9187d4c31d650f97bbfecb52189053", null, null, null, 1L, 1L },
-                    { 6L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(9300), 1L, "metinolyavrum@gmail.com", false, "OLYAVRUM", "METIN", "SenBen", "9456066bcb14f5c1fa388fda6310f38f", null, null, null, 1L, 1L },
-                    { 7L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(9304), 1L, "hasduruyi@outlook.com.tr", false, "DURUYI", "HAS", "HASDURUYI", "6c6e2722c24fd0c5d5153732c0776830", null, null, null, 1L, 1L },
-                    { 8L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(9308), 1L, "mermeresican@gmail.com", false, "MERMER", "Ömer", "mermeromer", "6d071901727aec1ba6d8e2497ef5b709", null, null, null, 1L, 1L },
-                    { 10L, new DateTime(2021, 2, 14, 21, 34, 42, 778, DateTimeKind.Local).AddTicks(9315), 1L, "yellenenfiravun@gmail.com", false, "YELLENIR", "Firavun", "yellos", "64fead8f0a346037b7d1f3247fffa33d", null, null, null, 1L, 1L }
+                    { 5L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(7612), 1L, "katanasapi@gmail.com", false, "SAPI", "KATANA", "katanasapi", "ad9187d4c31d650f97bbfecb52189053", null, null, null, 1L, 1L },
+                    { 1L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(4737), 1L, "ilhanaltin@gmail.com", false, "ALTIN", "İlhan", "ilhanaltin", "e44f5f0bf7a453a731217f288641ab16", null, null, null, 1L, 1L },
+                    { 3L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(7600), 1L, "alivelikonya@gmail.com", false, "KONYA", "Ali Veli", "alivelikonya", "e44f5f0bf7a453a731217f288641ab16", null, null, null, 1L, 1L },
+                    { 2L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(7586), 1L, "yya@gmail.com", false, "ALTIN", "Yiğityürek", "yigit", "e44f5f0bf7a453a731217f288641ab16", null, null, null, 1L, 1L },
+                    { 9L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(7707), 1L, "hacilarageldik@gmail.com", false, "BABATEKKESI", "HACI", "ozontabakasi", "ad9187d4c31d650f97bbfecb52189053", "111423556560295556670", null, null, 2L, 1L },
+                    { 4L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(7606), 1L, "kocahmet@msn.com", false, "KOÇ", "Ahmet", "kocero", "e44f5f0bf7a453a731217f288641ab16", null, null, null, 1L, 1L },
+                    { 10L, new DateTime(2021, 2, 15, 20, 57, 55, 825, DateTimeKind.Local).AddTicks(7712), 1L, "yellenenfiravun@gmail.com", false, "YELLENIR", "Firavun", "yellos", "64fead8f0a346037b7d1f3247fffa33d", null, null, null, 1L, 1L }
                 });
 
             migrationBuilder.InsertData(
@@ -1874,16 +1816,16 @@ namespace Bildirim.App.Migrations.Migrations
                 columns: new[] { "ID", "CREATED_DATE", "CREATED_USER", "ROLE_TYPE_ID", "UPDATED_DATE", "UPDATED_USER", "USER_ID" },
                 values: new object[,]
                 {
-                    { 9L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1614), 1L, 2L, null, null, 9L },
-                    { 1L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1587), 1L, 1L, null, null, 1L },
-                    { 2L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1597), 1L, 1L, null, null, 2L },
-                    { 3L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1600), 1L, 2L, null, null, 3L },
-                    { 4L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1603), 1L, 2L, null, null, 4L },
-                    { 5L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1605), 1L, 2L, null, null, 5L },
-                    { 6L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1608), 1L, 2L, null, null, 6L },
-                    { 7L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1610), 1L, 2L, null, null, 7L },
-                    { 8L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1612), 1L, 2L, null, null, 8L },
-                    { 10L, new DateTime(2021, 2, 14, 21, 34, 42, 779, DateTimeKind.Local).AddTicks(1617), 1L, 2L, null, null, 10L }
+                    { 9L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(1044), 1L, 2L, null, null, 9L },
+                    { 1L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(979), 1L, 1L, null, null, 1L },
+                    { 2L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(993), 1L, 1L, null, null, 2L },
+                    { 3L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(999), 1L, 2L, null, null, 3L },
+                    { 4L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(1020), 1L, 2L, null, null, 4L },
+                    { 5L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(1028), 1L, 2L, null, null, 5L },
+                    { 6L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(1034), 1L, 2L, null, null, 6L },
+                    { 7L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(1037), 1L, 2L, null, null, 7L },
+                    { 8L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(1041), 1L, 2L, null, null, 8L },
+                    { 10L, new DateTime(2021, 2, 15, 20, 57, 55, 826, DateTimeKind.Local).AddTicks(1048), 1L, 2L, null, null, 10L }
                 });
 
             migrationBuilder.CreateIndex(
@@ -1892,24 +1834,19 @@ namespace Bildirim.App.Migrations.Migrations
                 column: "BRAND_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_T_CAMPAIGN_CAMPAIGN_TYPE_ID",
-                table: "T_CAMPAIGN",
-                column: "CAMPAIGN_TYPE_ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_T_CAMPAIGN_COMPANY_ID",
-                table: "T_CAMPAIGN",
-                column: "COMPANY_ID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_T_CAMPAIGN_NOTIFICATION_ID",
                 table: "T_CAMPAIGN",
                 column: "NOTIFICATION_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_T_CAMPAIGN_SECTOR_TYPE_ID",
+                name: "IX_T_CAMPAIGN_OWNER_BRAND_ID",
                 table: "T_CAMPAIGN",
-                column: "SECTOR_TYPE_ID");
+                column: "OWNER_BRAND_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_T_CAMPAIGN_SECTOR_ID",
+                table: "T_CAMPAIGN",
+                column: "SECTOR_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_T_CONTACT_USER_ID",
@@ -1997,14 +1934,14 @@ namespace Bildirim.App.Migrations.Migrations
                 column: "COUNTRY_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TT_COMPANY_COUNTRY_ID",
-                table: "TT_COMPANY",
-                column: "COUNTRY_ID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TT_COUNTY_CITY_ID",
                 table: "TT_COUNTY",
                 column: "CITY_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TT_SECTOR_COUNTRY_ID",
+                table: "TT_SECTOR",
+                column: "COUNTRY_ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -2032,12 +1969,6 @@ namespace Bildirim.App.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "TT_BRAND");
-
-            migrationBuilder.DropTable(
-                name: "TT_CAMPAIGN");
-
-            migrationBuilder.DropTable(
-                name: "TT_COMPANY");
 
             migrationBuilder.DropTable(
                 name: "TT_SECTOR");

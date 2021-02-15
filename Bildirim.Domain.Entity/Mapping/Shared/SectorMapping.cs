@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bildirim.Domain.Entity.Mapping.Shared
 {
-    public class CompanyMapping : IEntityTypeConfiguration<Company>
+    public class SectorMapping : IEntityTypeConfiguration<Sector>
     {
-        public void Configure(EntityTypeBuilder<Company> builder)
+        public void Configure(EntityTypeBuilder<Sector> builder)
         {
-            builder.ToTable("TT_COMPANY");
+            builder.ToTable("TT_SECTOR");
 
             builder.Property(t => t.Adi)
               .IsRequired()

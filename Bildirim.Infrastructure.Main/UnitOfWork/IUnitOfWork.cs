@@ -26,6 +26,12 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
 
         #endregion
 
+        #region Campaign
+
+        ICampaignRepository CampaignRepository { get; }
+
+        #endregion
+
         #region Shared
 
         ISectorRepository SectorRepository { get; }

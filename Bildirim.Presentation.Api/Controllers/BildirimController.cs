@@ -6,6 +6,7 @@ using Bildirim.Domain.Entity.Entities.Notify;
 using Bildirim.Domain.Entity.Entities.Shared;
 using Bildirim.Infrastructure.Main.UnitOfWork;
 using Bildirim.Presentation.Api.Controllers;
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -52,6 +53,21 @@ namespace Bildirim.Controllers
                                 .Where(d => d.Attributes["class"].Value
                                 .Contains("campaign-filter__select campaign-filter__select"))
                                 .ToList();
+
+                        var mainBrand = _unitOfWork.BrandRepository.Get(t => t.Adi.Equals("Garanti Bankası") && t.CountryId == Constants.COUNTRY_TURKEY);
+
+                        if (mainBrand == null)
+                        {
+                            mainBrand = new Brand
+                            {
+                                Adi = "Garanti Bankası",
+                                CountryId = Constants.COUNTRY_TURKEY,
+                                CreatedDateTime = DateTime.Now,
+                                CreatedUserId = 1
+                            };
+
+                            _unitOfWork.BrandRepository.Add(mainBrand);
+                        }
 
                         var listOfSectors = optionsOfSectorAndBrand[0].InnerText.Split("\r\n").Select(s => s.Trim()).ToArray();
 
@@ -143,6 +159,7 @@ namespace Bildirim.Controllers
                                                                        .FirstOrDefault().InnerHtml;
 
                                         campaign.CampaignTypeId = Constants.CAMPAIGN_TYPE_PERSONAL;
+                                        campaign.OwnerBrandId = mainBrand.Id;
 
                                         var startEndDate = DateTimeHelper.GetStartEndDateFromString(startEndDateStr);
 
@@ -185,17 +202,44 @@ namespace Bildirim.Controllers
                                                 .Where(d => d.Attributes["class"] != null && d.Attributes["class"].Value.Contains("campaign-detail__info campaign-detail__info--left"))
                                                 .FirstOrDefault();
 
-                                        if (sectorAndBrand != null)
+                                        var listToBeRemoved = new List<HtmlNode>();
+
+                                        foreach (var cNode in detailHtmlLeft.ChildNodes)
                                         {
-                                            detailHtmlLeft = detailHtmlLeft.RemoveChild(sectorAndBrand);
+                                            if (cNode.Attributes["class"] != null && cNode.Attributes["class"].Value.Contains("btn-landing-capsule"))
+                                            { 
+                                                listToBeRemoved.Add(cNode);
+                                                continue; 
+                                            }
+
+                                            if (cNode.Attributes["class"] != null && cNode.Attributes["class"].Value.Contains("campaign-detail__info campaign-detail__info--left"))
+                                            {
+                                                listToBeRemoved.Add(cNode);
+                                                continue; 
+                                            }
+
+                                            cNode.Attributes.Remove("class");
+                                            cNode.Attributes.Remove("id");
                                         }
 
-                                        if (btnlandingcapsule != null)
+                                        foreach (var rNode in listToBeRemoved)
                                         {
-                                            detailHtmlLeft = detailHtmlLeft.RemoveChild(btnlandingcapsule);
+                                            detailHtmlLeft.RemoveChild(rNode);
                                         }
 
-                                        //notify.DetailText
+                                        var detailHtmlRight = nodeDetail.Descendants("div")
+                                                .Where(d => d.Attributes["class"] != null && d.Attributes["class"].Value.Contains("campaign-detail__info campaign-detail__info--right"))
+                                                .FirstOrDefault();
+
+                                        foreach (var cNode in detailHtmlRight.ChildNodes)
+                                        {
+                                            cNode.Attributes.Remove("class");
+                                            cNode.Attributes.Remove("id");
+                                        }
+
+                                        campaign.DetailText = detailHtmlLeft.InnerHtml + "<br>" + detailHtmlRight.InnerHtml;
+
+                                        _unitOfWork.CampaignRepository.Add(campaign);
                                     }
                                     catch (Exception e)
                                     {

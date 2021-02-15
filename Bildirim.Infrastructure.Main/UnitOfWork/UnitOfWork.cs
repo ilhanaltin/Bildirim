@@ -148,6 +148,24 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
 
         #endregion
 
+        #region Campaign
+
+        private ICampaignRepository _CampaignRepository;
+
+        public ICampaignRepository CampaignRepository
+        {
+            get
+            {
+                if (this._CampaignRepository == null)
+                {
+                    this._CampaignRepository = new CampaignRepository(_context);
+                }
+                return _CampaignRepository;
+            }
+        }
+
+        #endregion
+
         #region Shared
 
         private IBrandRepository _BrandRepository;

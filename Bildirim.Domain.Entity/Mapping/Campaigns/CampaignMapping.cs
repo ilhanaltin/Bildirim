@@ -19,6 +19,15 @@ namespace Bildirim.Domain.Mapping.Blog
                 .IsRequired()
                 .HasColumnName("NOTIFICATION_ID");
 
+            builder.HasOne(t => t.CampaignType)
+                .WithMany()
+                .HasForeignKey(t => t.CampaignTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(t => t.CampaignTypeId)
+                .IsRequired()
+                .HasColumnName("CAMPAIGN_TYPE_ID");
+
             builder.ToTable("T_CAMPAIGN");
 
             builder.Property(t => t.DetailLink)

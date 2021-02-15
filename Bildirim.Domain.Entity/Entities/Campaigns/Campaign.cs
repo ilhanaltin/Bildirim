@@ -12,6 +12,10 @@ namespace Bildirim.Domain.Entity.Entities.Campaigns
 
         public virtual Notification Notification { get; set; }
 
+        public long CampaignTypeId { get; set; }
+
+        public virtual CampaignType CampaignType { get; set; }
+
         public string DetailLink { get; set; }
 
         public string MainImageLink { get; set; }

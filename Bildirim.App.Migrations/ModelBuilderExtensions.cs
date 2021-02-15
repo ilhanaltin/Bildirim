@@ -41,6 +41,11 @@ namespace Bildirim.App.Migrations
                 new NotificationType { Id = 1, Adi = "Kampanya", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
             );
 
+            modelBuilder.Entity<CampaignType>().HasData(
+               new CampaignType { Id = 1, Adi = "Bireysel", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
+               new CampaignType { Id = 2, Adi = "Ticari", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
+           );
+
             #endregion
 
             #region Country

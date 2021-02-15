@@ -1,4 +1,5 @@
 ﻿using Bildirim.Domain.Entity.Entities.Authorization;
+using Bildirim.Domain.Entity.Entities.Campaigns;
 using Bildirim.Domain.Entity.Entities.Notify;
 using Bildirim.Domain.Entity.Entities.Shared;
 using Bildirim.Domain.Entity.Entities.Types;
@@ -21,7 +22,9 @@ namespace Bildirim.App.Migrations
         public virtual DbSet<Notification> Notification { get; set; }
         public virtual DbSet<NotificationVote> NotificationVote { get; set; }
         public virtual DbSet<UserFavoriteNotifications> UserFavoriteNotifications { get; set; }
-        
+
+        public virtual DbSet<Campaign> Campaign { get; set; }
+
         public virtual DbSet<NotificationType> NotificationType { get; set; }
         public virtual DbSet<UserLoginType> UserLoginType { get; set; }
         public virtual DbSet<RoleType> RoleType { get; set; }
@@ -30,8 +33,8 @@ namespace Bildirim.App.Migrations
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<County> County { get; set; }
-
-        public virtual DbSet<Brand> Company { get; set; }
+        public virtual DbSet<Brand> Brand { get; set; }
+        public virtual DbSet<Sector> Sector { get; set; }
 
 
         #endregion

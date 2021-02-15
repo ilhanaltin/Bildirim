@@ -3,6 +3,7 @@ using Bildirim.Common;
 using Bildirim.Common.Helpers;
 using Bildirim.Domain.Entity.Entities.Campaigns;
 using Bildirim.Domain.Entity.Entities.Notify;
+using Bildirim.Domain.Entity.Entities.Shared;
 using Bildirim.Infrastructure.Main.UnitOfWork;
 using Bildirim.Presentation.Api.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -53,9 +54,40 @@ namespace Bildirim.Controllers
                                 .ToList();
 
                         var listOfSectors = optionsOfSectorAndBrand[0].InnerText.Split("\r\n").Select(s => s.Trim()).ToArray();
+
+                        foreach (var s in listOfSectors)
+                        {
+                            if (_unitOfWork.SectorRepository.Any(t => t.Adi.Equals(s) && t.CountryId == Constants.COUNTRY_TURKEY))
+                                continue;
+
+                            var sector = new Sector
+                            {
+                                Adi = s,
+                                CountryId = Constants.COUNTRY_TURKEY,
+                                CreatedDateTime = DateTime.Now,
+                                CreatedUserId = 1
+                            };
+
+                            _unitOfWork.SectorRepository.Add(sector);
+                        }
+
                         var listOfBrands = optionsOfSectorAndBrand[1].InnerText.Split("\r\n").Select(s => s.Trim()).ToArray();
 
+                        foreach (var b in listOfBrands)
+                        {
+                            if (_unitOfWork.BrandRepository.Any(t => t.Adi.Equals(b) && t.CountryId == Constants.COUNTRY_TURKEY))
+                                continue;
 
+                            var brand = new Brand
+                            {
+                                Adi = b,
+                                CountryId = Constants.COUNTRY_TURKEY,
+                                CreatedDateTime = DateTime.Now,
+                                CreatedUserId = 1
+                            };
+
+                            _unitOfWork.BrandRepository.Add(brand);
+                        }
 
                         var nodes = document.DocumentNode.SelectNodes("//div[contains(@class, 'campaign-box check-box-item')]");
 
@@ -66,8 +98,8 @@ namespace Bildirim.Controllers
 
                             notify.Name = node.Attributes["data-text"].Value;
                             notify.NotificationStatusTypeId = Constants.NOTIFICATION_STATUS_TYPE_WAITING_APPROVE;
-                            notify.NotificationTypeId = Constants.NOTIFICATION_TYPE_COMPAIGN_PERSONAL;
-                            notify.CountryId = 1;
+                            notify.NotificationTypeId = Constants.NOTIFICATION_TYPE_COMPAIGN;
+                            notify.CountryId = Constants.COUNTRY_TURKEY;
                             notify.CreatedUserId = 1;
 
                             _unitOfWork.NotificationRepository.Add(notify);
@@ -110,6 +142,8 @@ namespace Bildirim.Controllers
                                                                        .Where(d => d.Attributes["class"] != null && d.Attributes["class"].Value.Contains("campaign-date"))
                                                                        .FirstOrDefault().InnerHtml;
 
+                                        campaign.CampaignTypeId = Constants.CAMPAIGN_TYPE_PERSONAL;
+
                                         var startEndDate = DateTimeHelper.GetStartEndDateFromString(startEndDateStr);
 
                                         campaign.StartDate = startEndDate.StartDate;
@@ -130,6 +164,18 @@ namespace Bildirim.Controllers
                                         var sectorAndBrand = nodeDetail.Descendants("div")
                                                 .Where(d => d.Attributes["class"] != null && d.Attributes["class"].Value.Contains("campaign-detail__brand-sector"))
                                                 .FirstOrDefault();
+
+                                        string sectorStr = sectorAndBrand.InnerText.Split("/")[0].Replace("Sektör:", "").Trim();
+                                        string brandStr = sectorAndBrand.InnerText.Split("/")[1].Replace("Marka:", "").Trim();
+
+                                        var sectorEntity = _unitOfWork.SectorRepository.Get(t => t.Adi.Equals(sectorStr));
+                                        var brandEntity = _unitOfWork.BrandRepository.Get(t => t.Adi.Equals(brandStr));
+
+                                        if (sectorEntity != null)
+                                            campaign.SectorId = sectorEntity.Id;
+
+                                        if (brandEntity != null)
+                                            campaign.BrandId = brandEntity.Id;
 
                                         var btnlandingcapsule = nodeDetail.Descendants("div")
                                                 .Where(d => d.Attributes["class"] != null && d.Attributes["class"].Value.Contains("btn-landing-capsule"))

@@ -100,18 +100,52 @@ namespace Bildirim.Common
             return "-";
         }
 
-        public const int NOTIFICATION_TYPE_COMPAIGN_PERSONAL = 2;
-        public const int NOTIFICATION_TYPE_COMPAIGN_COMMERCIAL = 3;
+        public const int NOTIFICATION_TYPE_COMPAIGN = 1;
 
         public static string getNotificationTypeString(long status)
         {
             switch (status)
             {
-                case Constants.NOTIFICATION_TYPE_COMPAIGN_PERSONAL:
-                    return "Kampanya/Bireysel";
+                case Constants.NOTIFICATION_TYPE_COMPAIGN:
+                    return "Kampanya";
 
-                case Constants.NOTIFICATION_TYPE_COMPAIGN_COMMERCIAL:
-                    return "Kampanya/Ticari";
+            }
+            return "-";
+        }
+
+        public const int COUNTRY_TURKEY = 1;
+        public const int COUNTRY_USA = 2;
+        public const int COUNTRY_GERMANY = 3;
+
+        public static string getCountryString(long status)
+        {
+            switch (status)
+            {
+                case Constants.COUNTRY_TURKEY:
+                    return "Türkiye";
+
+                case Constants.COUNTRY_USA:
+                    return "Amerika";
+
+                case Constants.COUNTRY_GERMANY:
+                    return "Almanya";
+
+            }
+            return "-";
+        }
+
+        public const int CAMPAIGN_TYPE_PERSONAL = 1;
+        public const int CAMPAIGN_TYPE_COMMERICAL = 2;
+
+        public static string getCampaignTypeString(long status)
+        {
+            switch (status)
+            {
+                case Constants.CAMPAIGN_TYPE_PERSONAL:
+                    return "Bireysel";
+
+                case Constants.CAMPAIGN_TYPE_COMMERICAL:
+                    return "Ticari";
             }
             return "-";
         }

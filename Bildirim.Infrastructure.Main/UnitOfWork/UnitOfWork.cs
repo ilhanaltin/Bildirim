@@ -1,9 +1,11 @@
 ﻿using Bildirim.App.Migrations;
 using Bildirim.Common;
 using Bildirim.Infrastructure.Main.Repositories.Impl.Authorization;
+using Bildirim.Infrastructure.Main.Repositories.Impl.Shared;
 using Bildirim.Infrastructure.Main.Repositories.Impl.Types;
 using Bildirim.Infrastructure.Main.Repositories.Interfaces.Authorization;
 using Bildirim.Infrastructure.Main.Repositories.Interfaces.Notify;
+using Bildirim.Infrastructure.Main.Repositories.Interfaces.Shared;
 using Bildirim.Infrastructure.Main.Repositories.Interfaces.Types;
 using System;
 using System.Collections.Generic;
@@ -141,6 +143,38 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
                     this._NotificationVoteRepository = new NotificationVoteRepository(_context);
                 }
                 return _NotificationVoteRepository;
+            }
+        }
+
+        #endregion
+
+        #region Shared
+
+        private IBrandRepository _BrandRepository;
+
+        public IBrandRepository BrandRepository
+        {
+            get
+            {
+                if (this._BrandRepository == null)
+                {
+                    this._BrandRepository = new BrandRepository(_context);
+                }
+                return _BrandRepository;
+            }
+        }
+
+        private ISectorRepository _SectorRepository;
+
+        public ISectorRepository SectorRepository
+        {
+            get
+            {
+                if (this._SectorRepository == null)
+                {
+                    this._SectorRepository = new SectorRepository(_context);
+                }
+                return _SectorRepository;
             }
         }
 

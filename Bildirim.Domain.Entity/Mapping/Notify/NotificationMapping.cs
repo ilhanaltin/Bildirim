@@ -31,6 +31,9 @@ namespace Bildirim.Domain.Mapping.Blog
                 .IsRequired()
                 .HasColumnName("NOTIFICATION_STATUS_TYPE_ID");
 
+            builder.Property(t => t.ReadCount)
+              .HasColumnName("READ_COUNT");
+
             builder.HasOne(t => t.County)
                 .WithMany()
                 .HasForeignKey(t => t.CountyId)
@@ -47,7 +50,7 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.Property(t => t.CityId)
                 .HasColumnName("CITY_ID");
 
-            builder.HasOne(t => t.County)
+            builder.HasOne(t => t.Country)
                .WithMany()
                .HasForeignKey(t => t.CountryId)
                .OnDelete(DeleteBehavior.NoAction);

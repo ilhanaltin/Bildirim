@@ -1,5 +1,6 @@
 ﻿using Bildirim.Infrastructure.Main.Repositories.Interfaces.Authorization;
 using Bildirim.Infrastructure.Main.Repositories.Interfaces.Notify;
+using Bildirim.Infrastructure.Main.Repositories.Interfaces.Shared;
 using Bildirim.Infrastructure.Main.Repositories.Interfaces.Types;
 using System;
 
@@ -22,6 +23,13 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
 
         INotificationRepository NotificationRepository { get; }
         INotificationVoteRepository NotificationVoteRepository { get; }
+
+        #endregion
+
+        #region Shared
+
+        ISectorRepository SectorRepository { get; }
+        IBrandRepository BrandRepository { get; }
 
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using Bildirim.Common.Types;
 using System;
+using System.Linq;
 
 namespace Bildirim.Common.Helpers
 {
@@ -25,47 +26,54 @@ namespace Bildirim.Common.Helpers
                     countOfMonths++;
             }
 
-            if (countOfMonths == 1)
+            try
             {
-                //Sample: 5-25 Şubat 2021
-                var dates = dateString.Split("-");
+                if (countOfMonths == 1)
+                {
+                    //Sample: 5-25 Şubat 2021
+                    var dates = dateString.Split("-");
 
-                if (dates.Length == 1)
-                    dates = dateString.Split("–");
+                    if (dates.Length == 1)
+                        dates = dateString.Split("–");
 
-                int dayStart = Convert.ToInt32(dates[0]);
+                    int dayStart = Convert.ToInt32(dates[0]);
 
-                var dateValuesEnd = dates[1].Trim().Split(" ");
-                int dayEnd = Convert.ToInt32(dateValuesEnd[0]);
-                int secondMonth = Convert.ToInt32(Array.IndexOf(Constants.monthNames, dateValuesEnd[1].ToLower()) + 1);
-                int year = Convert.ToInt32(dateValuesEnd[2]);
+                    var dateValuesEnd = dates[1].Trim().Split(" ").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
-                result.StartDate = new DateTime(year, secondMonth, dayStart, 0, 0, 0);
-                result.EndDate = new DateTime(year, secondMonth, dayEnd, 23, 59, 59);
+                    int dayEnd = Convert.ToInt32(dateValuesEnd[0]);
+                    int secondMonth = Convert.ToInt32(Array.IndexOf(Constants.monthNames, dateValuesEnd[1].ToLower()) + 1);
+                    int year = Convert.ToInt32(dateValuesEnd[2]);
+
+                    result.StartDate = new DateTime(year, secondMonth, dayStart, 0, 0, 0);
+                    result.EndDate = new DateTime(year, secondMonth, dayEnd, 23, 59, 59);
+                }
+                else
+                {
+                    //Sample: 16 Ocak-15 Şubat 2021
+                    var dates = dateString.Split("-");
+
+                    if (dates.Length == 1)
+                        dates = dateString.Split("–");
+
+                    var dateValuesStart = dates[0].Trim().Split(" ").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    var dateValuesEnd = dates[1].Trim().Split(" ").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+                    int dayStart = Convert.ToInt32(dateValuesStart[0]);
+                    int firstMonth = Convert.ToInt32(Array.IndexOf(Constants.monthNames, dateValuesStart[1].ToLower()) + 1);
+                    var yearStart = dateValuesStart.Length == 3 ? Convert.ToInt32(dateValuesStart[2]) : Convert.ToInt32(dateValuesEnd[2]);
+
+                    int dayEnd = Convert.ToInt32(dateValuesEnd[0]);
+                    int secondMonth = Convert.ToInt32(Array.IndexOf(Constants.monthNames, dateValuesEnd[1].ToLower()) + 1);
+                    int yearEnd = Convert.ToInt32(dateValuesEnd[2]);
+
+                    result.StartDate = new DateTime(yearStart, firstMonth, dayStart, 0, 0, 0);
+                    result.EndDate = new DateTime(yearEnd, secondMonth, dayEnd, 23, 59, 59);
+                }
             }
-            else
+            catch (Exception e)
             {
-                //Sample: 16 Ocak-15 Şubat 2021
-                var dates = dateString.Split("-");
-
-                if (dates.Length == 1)
-                    dates = dateString.Split("–");
-
-                var dateValuesStart = dates[0].Trim().Split(" ");
-                var dateValuesEnd = dates[1].Trim().Split(" ");
-
-                int dayStart = Convert.ToInt32(dateValuesStart[0]);
-                int firstMonth = Convert.ToInt32(Array.IndexOf(Constants.monthNames, dateValuesStart[1].ToLower()) + 1);
-                var yearStart = dateValuesStart.Length == 3 ? Convert.ToInt32(dateValuesStart[2]) : Convert.ToInt32(dateValuesEnd[2]);
-
-                int dayEnd = Convert.ToInt32(dateValuesEnd[0]);
-                int secondMonth = Convert.ToInt32(Array.IndexOf(Constants.monthNames, dateValuesEnd[1].ToLower()) + 1);
-                int yearEnd = Convert.ToInt32(dateValuesEnd[2]);
-
-                result.StartDate = new DateTime(yearStart, firstMonth, dayStart, 0, 0, 0);
-                result.EndDate = new DateTime(yearEnd, secondMonth, dayEnd, 23, 59, 59);
+                return null;
             }
-
 
             return result;
         }

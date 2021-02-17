@@ -32,6 +32,8 @@ namespace Bildirim.Domain.Entity.Entities.Notify
 
         public virtual County County { get; set; }
 
+        public string Message { get; set; }
+
         public virtual List<NotificationVote> NotificationVotes { get; set; }
     }
 }

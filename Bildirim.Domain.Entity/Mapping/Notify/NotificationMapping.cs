@@ -58,6 +58,9 @@ namespace Bildirim.Domain.Mapping.Blog
             builder.Property(t => t.CountryId)
                 .IsRequired()
                 .HasColumnName("COUNTRY_ID");
+
+            builder.Property(t => t.Message)
+              .HasColumnName("MESSAGE");
         }
     }
 }

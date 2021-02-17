@@ -34,7 +34,8 @@ namespace Bildirim.App.Migrations
             modelBuilder.Entity<NotificationStatusType>().HasData(
                 new NotificationStatusType { Id = 1, Adi = "Silinmiş", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
                 new NotificationStatusType { Id = 2, Adi = "Onay Bekliyor", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
-                new NotificationStatusType { Id = 3, Adi = "Onaylandı", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
+                new NotificationStatusType { Id = 3, Adi = "Onaylandı", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
+                new NotificationStatusType { Id = 4, Adi = "Hatalı Aktarım", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
             );
 
             modelBuilder.Entity<NotificationType>().HasData(

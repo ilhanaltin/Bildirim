@@ -83,6 +83,7 @@ namespace Bildirim.Common
         public const int NOTIFICATION_STATUS_TYPE_DELETED = 1;
         public const int NOTIFICATION_STATUS_TYPE_WAITING_APPROVE = 2;
         public const int NOTIFICATION_STATUS_TYPE_APPROVED = 3;
+        public const int NOTIFICATION_STATUS_TYPE_ERROR = 4;
 
         public static string getNotificationStatusString(long status)
         {
@@ -96,6 +97,9 @@ namespace Bildirim.Common
 
                 case Constants.NOTIFICATION_STATUS_TYPE_APPROVED:
                     return "Onaylandı";
+
+                case Constants.NOTIFICATION_STATUS_TYPE_ERROR:
+                    return "Hata Oluştu";
             }
             return "-";
         }

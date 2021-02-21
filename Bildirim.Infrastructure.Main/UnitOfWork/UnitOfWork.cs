@@ -86,20 +86,6 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
             }
         }
 
-        private IContactRepository _ContactRepository;
-
-        public IContactRepository ContactRepository
-        {
-            get
-            {
-                if (this._ContactRepository == null)
-                {
-                    this._ContactRepository = new ContactRepository(_context);
-                }
-                return _ContactRepository;
-            }
-        }
-
         private ITokenRepository _TokenRepository;
 
         public ITokenRepository TokenRepository

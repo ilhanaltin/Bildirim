@@ -5,6 +5,9 @@ using Bildirim.Domain.Entity.Entities.Authorization;
 using Bildirim.Domain.Model.Authorization;
 using Bildirim.Domain.Entity.Entities.Notify;
 using Bildirim.Domain.Model.Notify;
+using Bildirim.Domain.Entity.Entities.Campaigns;
+using Bildirim.Domain.Model.Campaigns;
+using System.Collections.Generic;
 
 namespace Bildirim.Presentation.Api.Mappings
 {
@@ -14,6 +17,7 @@ namespace Bildirim.Presentation.Api.Mappings
         {
             ConfigureTypeMappings();
             ConfigureUserMappings();
+            ConfigureCampaignMappings();
             ConfigureNotificationMappings();
         }
 
@@ -26,7 +30,14 @@ namespace Bildirim.Presentation.Api.Mappings
         public void ConfigureNotificationMappings()
         {
             CreateMap<Notification, NotificationVM>();
+
             CreateMap<NotificationVote, NotificationVoteVM>();
+        }
+
+        public void ConfigureCampaignMappings()
+        {
+            CreateMap<Campaign, CampaignVM>()
+                .ForMember(x => x.NotificationVM, opt => opt.MapFrom(t => t.Notification));
         }
 
         public void ConfigureUserMappings()
@@ -36,8 +47,6 @@ namespace Bildirim.Presentation.Api.Mappings
                 .ForMember(x => x.StatusName, opt => opt.MapFrom(t => t.UserStatusType.Adi))
                 .ForMember(x => x.RoleId, opt => opt.MapFrom(t => t.UserRoles[0].RoleTypeId))
                 .ForMember(x => x.RoleName, opt => opt.MapFrom(t => t.UserRoles[0].RoleType.Adi));
-
-            CreateMap<Contact, ContactVM>();
         }
     }
 }

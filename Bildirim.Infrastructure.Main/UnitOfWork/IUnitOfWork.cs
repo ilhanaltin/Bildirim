@@ -14,7 +14,6 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
         IUserRoleRepository UserRoleRepository { get; }
         IUserVerificationRepository UserVerificationRepository { get; }
         ILoginRepository LoginRepository { get; }
-        IContactRepository ContactRepository { get; }
         ITokenRepository TokenRepository { get; }
 
         #endregion

@@ -18,8 +18,6 @@ namespace Bildirim.Presentation.Api.Mappings
             CreateMap<RegisterRequest, User>()
                 .ForMember(x => x.UserStatusTypeId, opt => opt.MapFrom(t => Constants.USER_STATUS_WAITING_ACTIVATION))
                 .ForMember(x => x.UserRoles, opt => opt.Ignore());
-
-            CreateMap<ContactRequest, Contact>();
         }
     }
 }

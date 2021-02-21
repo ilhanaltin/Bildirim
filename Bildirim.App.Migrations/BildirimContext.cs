@@ -13,7 +13,6 @@ namespace Bildirim.App.Migrations
     {
         #region Dbsets
 
-        public virtual DbSet<Contact> Contact { get; set; }
         public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }

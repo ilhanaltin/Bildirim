@@ -5,9 +5,11 @@ namespace Bildirim.Domain.Model.Campaigns
 {
     public class CampaignVM : BaseVM
     {
-        public NotificationVM NotificationVM { get; set; }
+        public NotificationVM Notification { get; set; }
 
         public long CampaignTypeId { get; set; }
+
+        public string CampaignTypeAdi { get; set; }
 
         public string DetailLink { get; set; }
 
@@ -28,9 +30,12 @@ namespace Bildirim.Domain.Model.Campaigns
         public string DetailText { get; set; }
 
         public long OwnerBrandId { get; set; }
+        public string OwnerBrandAdi { get; set; }
 
         public long? BrandId { get; set; }
+        public string BrandAdi { get; set; }
 
         public long? SectorId { get; set; }
+        public string SectorAdi { get; set; }
     }
 }

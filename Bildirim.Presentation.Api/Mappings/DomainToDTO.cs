@@ -29,7 +29,13 @@ namespace Bildirim.Presentation.Api.Mappings
 
         public void ConfigureNotificationMappings()
         {
-            CreateMap<Notification, NotificationVM>();
+            CreateMap<Notification, NotificationVM>()
+                .ForMember(x => x.CityAdi, opt => opt.MapFrom(t => t.City.Adi))
+                .ForMember(x => x.CountryAdi, opt => opt.MapFrom(t => t.Country.Adi))
+                .ForMember(x => x.CountyAdi, opt => opt.MapFrom(t => t.County.Adi))
+                .ForMember(x => x.NotificationStatusTypeAdi, opt => opt.MapFrom(t => t.NotificationStatusType.Adi))
+                .ForMember(x => x.NotificationTypeName, opt => opt.MapFrom(t => t.NotificationType.Adi));
+
 
             CreateMap<NotificationVote, NotificationVoteVM>();
         }
@@ -37,7 +43,11 @@ namespace Bildirim.Presentation.Api.Mappings
         public void ConfigureCampaignMappings()
         {
             CreateMap<Campaign, CampaignVM>()
-                .ForMember(x => x.NotificationVM, opt => opt.MapFrom(t => t.Notification));
+                .ForMember(x => x.BrandAdi, opt => opt.MapFrom(t => t.Brand.Adi))
+                .ForMember(x => x.OwnerBrandAdi, opt => opt.MapFrom(t => t.OwnerBrand.Adi))
+                .ForMember(x => x.SectorAdi, opt => opt.MapFrom(t => t.Sector.Adi))
+                .ForMember(x => x.CampaignTypeAdi, opt => opt.MapFrom(t => t.CampaignType.Adi));
+
         }
 
         public void ConfigureUserMappings()

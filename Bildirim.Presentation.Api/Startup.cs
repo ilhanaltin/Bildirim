@@ -33,21 +33,18 @@ namespace Bildirim
             services.AddAutoMapper(typeof(DomainToDTO));
             services.AddAutoMapper(typeof(DTOToDomain));
 
-            /*services.AddCors(options =>
+            services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("https://dolar.net",
-                                        "https://test.dolar.net",
-                                        "https://admin.dolar.net",
-                                        "http://localhost:4000",
+                    builder.WithOrigins("http://localhost:4000",
                                         "http://localhost:4200",
                                         "http://localhost:4500")
                                         .AllowAnyHeader()
                                         .AllowAnyMethod();
                 });
-            });*/
+            });
 
             //configuration
             services.AddEasyCaching(options =>

@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 namespace Bildirim.Domain.Model.ReqRes
 {
+    public class GetPostRequest
+    {
+        public long Id { get; set; }
+    }
+
     public class CampaignListRequest
     {
         public int ItemCount { get; set; }
@@ -20,9 +25,7 @@ namespace Bildirim.Domain.Model.ReqRes
 
     public class CampaignResponseDetails
     {
-        public CampaignVM Post { get; set; }
-
-        public PagingVM CommentsPagingVM { get; set; }
+        public CampaignVM Campaign { get; set; }
     }
 
     public class CampaignPostRequest

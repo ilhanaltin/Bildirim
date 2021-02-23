@@ -37,7 +37,7 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
                                     .Include(x => x.Brand)
                                     .Include(x => x.OwnerBrand)
                                     .Include(t => t.CampaignType)
-                                    .Include(t => t.Notification)
+                                    .Include(t => t.Notification).ThenInclude(x=>x.NotificationVotes)
                                     .Include(t => t.Sector);
 
             var paging = new PagingVM();
@@ -46,7 +46,7 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
             paging.CurrentPage = request.PageId;
             paging.PageItemCount = request.ItemCount;
 
-            var campaigns = campaignsQuery.OrderByDescending(o => o.Id).Skip((request.PageId - 1) * request.ItemCount)
+            var campaigns = campaignsQuery.OrderByDescending(o => o.Id).Skip((request.PageId) * request.ItemCount)
                     .Take(request.ItemCount).ToList();
 
             var campaignsVM = _mapper.Map<List<Campaign>, List<CampaignVM>>(campaigns);
@@ -65,6 +65,61 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
             var response = new ServiceResult<CampaignResponseDetails>();
 
             response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpGet("GetById")]
+        public ServiceResult<CampaignResponseDetails> GetById([FromQuery] GetPostRequest request)
+        {
+            var campaign = _unitOfWork.CampaignRepository
+                .GetIncluding(t => t.Id == request.Id,
+                                x => x.Brand, 
+                                x => x.OwnerBrand, 
+                                x => x.CampaignType, 
+                                x => x.Notification, 
+                                x => x.Notification.NotificationVotes, 
+                                x => x.Sector);
+
+            var campaignVM = _mapper.Map<Campaign, CampaignVM>(campaign);
+
+            var response = new ServiceResult<CampaignResponseDetails>();
+
+            response.Result.Campaign = campaignVM;
+            response.Status = HttpStatusCode.OK;
+
+            return response;
+        }
+
+        [HttpPost("Delete")]
+        public ServiceResult<StandartResponseDetails> Delete([FromBody] DeleteRequest request)
+        {
+            var response = new ServiceResult<StandartResponseDetails>();
+
+            var campaign = _unitOfWork.CampaignRepository.GetIncluding(t => t.Id == request.Id, x => x.Notification);
+
+            if (campaign == null)
+            {
+                response.Status = HttpStatusCode.NotFound;
+                return response;
+            }
+
+            _unitOfWork.StartTransaction();
+
+            try
+            {
+                _unitOfWork.NotificationRepository.Remove(campaign.Notification);
+                //_unitOfWork.NotificationVotesRepository.Remove(campaign.Notification.NotificationVotes);
+                _unitOfWork.CampaignRepository.Remove(campaign);
+
+                _unitOfWork.Commit();
+
+                response.Status = HttpStatusCode.OK;
+            }
+            catch (Exception)
+            {
+                response.Status = HttpStatusCode.InternalServerError;
+            }
+
             return response;
         }
     }

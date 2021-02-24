@@ -80,7 +80,7 @@ namespace Bildirim.Common
             return "-";
         }
 
-        public const int NOTIFICATION_STATUS_TYPE_DELETED = 1;
+        public const int NOTIFICATION_STATUS_TYPE_PASSIVE = 1;
         public const int NOTIFICATION_STATUS_TYPE_WAITING_APPROVE = 2;
         public const int NOTIFICATION_STATUS_TYPE_APPROVED = 3;
         public const int NOTIFICATION_STATUS_TYPE_ERROR = 4;
@@ -89,8 +89,8 @@ namespace Bildirim.Common
         {
             switch (status)
             {
-                case Constants.NOTIFICATION_STATUS_TYPE_DELETED:
-                    return "Silinmiş";
+                case Constants.NOTIFICATION_STATUS_TYPE_PASSIVE:
+                    return "Pasif";
 
                 case Constants.NOTIFICATION_STATUS_TYPE_WAITING_APPROVE:
                     return "Onay Bekliyor";

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Bildirim.Common.Types;
 using Bildirim.Domain.Entity.Entities.Campaigns;
+using Bildirim.Domain.Entity.Entities.Shared;
 using Bildirim.Domain.Model.Campaigns;
 using Bildirim.Domain.Model.ReqRes;
 using Bildirim.Domain.Model.Shared;
+using Bildirim.Domain.Model.Types;
 using Bildirim.Infrastructure.Main.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -120,6 +122,24 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
                 response.Status = HttpStatusCode.InternalServerError;
             }
 
+            return response;
+        }
+
+        [HttpGet("GetBrands")]
+        public ServiceResult<BrandResponseDetails> GetBrands([FromQuery] GetBrandRequest request)
+        {
+            var response = new ServiceResult<BrandResponseDetails>();
+
+            var brands = _unitOfWork.BrandRepository.GetAll()
+                .Where(t=>t.CountryId == request.CountryId)
+                .ToList();
+
+            var brandsVM = _mapper.Map<List<Brand>, List<TypeVM>>(brands);
+
+            response.Status = HttpStatusCode.OK;
+            response.Result.Brands = brandsVM;
+
+            response.Status = HttpStatusCode.OK;
             return response;
         }
     }

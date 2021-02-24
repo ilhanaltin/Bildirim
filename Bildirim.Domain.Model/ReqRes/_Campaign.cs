@@ -1,5 +1,6 @@
 ﻿using Bildirim.Domain.Model.Campaigns;
 using Bildirim.Domain.Model.Shared;
+using Bildirim.Domain.Model.Types;
 using System;
 using System.Collections.Generic;
 
@@ -75,5 +76,15 @@ namespace Bildirim.Domain.Model.ReqRes
         public long? BrandId { get; set; }
 
         public long? SectorId { get; set; }
+    }
+
+    public class GetBrandRequest
+    {
+        public long CountryId { get; set; }
+    }
+
+    public class BrandResponseDetails
+    {
+        public List<TypeVM> Brands { get; set; }
     }
 }

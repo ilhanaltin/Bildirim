@@ -8,6 +8,7 @@ using Bildirim.Domain.Model.Notify;
 using Bildirim.Domain.Entity.Entities.Campaigns;
 using Bildirim.Domain.Model.Campaigns;
 using System.Collections.Generic;
+using Bildirim.Domain.Entity.Entities.Shared;
 
 namespace Bildirim.Presentation.Api.Mappings
 {
@@ -25,6 +26,7 @@ namespace Bildirim.Presentation.Api.Mappings
         {
             CreateMap<RoleType, TypeVM>();
             CreateMap<UserStatusType, TypeVM>();
+            CreateMap<Brand, TypeVM>();
         }
 
         public void ConfigureNotificationMappings()

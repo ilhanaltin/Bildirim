@@ -142,5 +142,23 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
             response.Status = HttpStatusCode.OK;
             return response;
         }
+
+        [HttpGet("GetSectors")]
+        public ServiceResult<SectorResponseDetails> GetSectors([FromQuery] GetSectorRequest request)
+        {
+            var response = new ServiceResult<SectorResponseDetails>();
+
+            var sectors = _unitOfWork.SectorRepository.GetAll()
+                .Where(t => t.CountryId == request.CountryId)
+                .ToList();
+
+            var sectorsVM = _mapper.Map<List<Sector>, List<TypeVM>>(sectors);
+
+            response.Status = HttpStatusCode.OK;
+            response.Result.Sectors = sectorsVM;
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
     }
 }

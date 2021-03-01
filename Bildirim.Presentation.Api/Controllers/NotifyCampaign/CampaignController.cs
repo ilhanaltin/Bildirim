@@ -35,12 +35,22 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
         {
             var response = new ServiceResult<CampaignListResponseDetails>();
 
-            var campaignsQuery = _unitOfWork.CampaignRepository.GetAll()
-                                    .Include(x => x.Brand)
-                                    .Include(x => x.OwnerBrand)
-                                    .Include(t => t.CampaignType)
-                                    .Include(t => t.Notification).ThenInclude(x=>x.NotificationVotes)
-                                    .Include(t => t.Sector);
+            var campaignsQuery = _unitOfWork.CampaignRepository.GetAllIncluding(x => x.Brand,
+                                                                                x => x.OwnerBrand,
+                                                                                t => t.CampaignType,
+                                                                                t => t.Notification,
+                                                                                t => t.Notification.NotificationVotes,
+                                                                                t => t.Sector);
+
+            if (request.NotificationStatusId.HasValue && request.NotificationStatusId.Value > 0)
+            {
+                campaignsQuery = campaignsQuery.Where(t => t.Notification.NotificationStatusTypeId == request.NotificationStatusId.Value);
+            }
+
+            if (request.OwnerBrandId.HasValue && request.OwnerBrandId.Value > 0)
+            {
+                campaignsQuery = campaignsQuery.Where(t => t.OwnerBrandId == request.OwnerBrandId);
+            }
 
             var paging = new PagingVM();
             paging.TotalCount = campaignsQuery.Count();
@@ -70,16 +80,37 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
             return response;
         }
 
+        [HttpPost("UpdateStatus")]
+        public ServiceResult<StandartResponseDetails> UpdateStatus([FromBody] NotificationStatusPostRequest request)
+        {
+            var response = new ServiceResult<StandartResponseDetails>();
+
+            var notifications = _unitOfWork.NotificationRepository
+                    .GetAll()
+                    .Where(t => request.NotificationIds.Contains(t.Id))
+                    .ToList();
+
+            notifications.ForEach(c => c.NotificationStatusTypeId = request.NotificationStatusTypeId);
+
+            foreach (var item in notifications)
+            {
+                _unitOfWork.NotificationRepository.Update(item);
+            }
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
         [HttpGet("GetById")]
         public ServiceResult<CampaignResponseDetails> GetById([FromQuery] GetPostRequest request)
         {
             var campaign = _unitOfWork.CampaignRepository
                 .GetIncluding(t => t.Id == request.Id,
-                                x => x.Brand, 
-                                x => x.OwnerBrand, 
-                                x => x.CampaignType, 
-                                x => x.Notification, 
-                                x => x.Notification.NotificationVotes, 
+                                x => x.Brand,
+                                x => x.OwnerBrand,
+                                x => x.CampaignType,
+                                x => x.Notification,
+                                x => x.Notification.NotificationVotes,
                                 x => x.Sector);
 
             var campaignVM = _mapper.Map<Campaign, CampaignVM>(campaign);
@@ -131,7 +162,7 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
             var response = new ServiceResult<BrandResponseDetails>();
 
             var brands = _unitOfWork.BrandRepository.GetAll()
-                .Where(t=>t.CountryId == request.CountryId)
+                .Where(t => t.CountryId == request.CountryId)
                 .ToList();
 
             var brandsVM = _mapper.Map<List<Brand>, List<TypeVM>>(brands);

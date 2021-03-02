@@ -36,6 +36,8 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
         ISectorRepository SectorRepository { get; }
         IBrandRepository BrandRepository { get; }
 
+        IMediaRepository MediaRepository { get; }
+
         #endregion
 
         #region Types

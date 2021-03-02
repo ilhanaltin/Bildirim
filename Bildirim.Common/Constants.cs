@@ -156,5 +156,21 @@ namespace Bildirim.Common
 
         public static string[] monthNames = { "ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos", "eylül", "ekim", "kasım", "aralık" };
 
+        public const int FILE_TYPE_IMAGE = 1;
+        public const int FILE_TYPE_VIDEO = 2;
+        public static string getFileTypeString(long fileType)
+        {
+            switch (fileType)
+            {
+                case Constants.FILE_TYPE_IMAGE:
+                    return "Resim";
+
+                case Constants.FILE_TYPE_VIDEO:
+                    return "Video";
+            }
+            return "-";
+        }
+
+        public const string ApiUrlAddress = "https://api.dolar.net/";
     }
 }

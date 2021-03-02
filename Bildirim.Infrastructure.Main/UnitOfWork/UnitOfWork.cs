@@ -182,6 +182,20 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
             }
         }
 
+        private IMediaRepository _MediaRepository;
+
+        public IMediaRepository MediaRepository
+        {
+            get
+            {
+                if (this._MediaRepository == null)
+                {
+                    this._MediaRepository = new MediaRepository(_context);
+                }
+                return _MediaRepository;
+            }
+        }
+
         #endregion
 
         #region Types

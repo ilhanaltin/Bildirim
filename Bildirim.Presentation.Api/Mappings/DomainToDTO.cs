@@ -7,8 +7,10 @@ using Bildirim.Domain.Entity.Entities.Notify;
 using Bildirim.Domain.Model.Notify;
 using Bildirim.Domain.Entity.Entities.Campaigns;
 using Bildirim.Domain.Model.Campaigns;
-using System.Collections.Generic;
 using Bildirim.Domain.Entity.Entities.Shared;
+using Bildirim.Domain.Model.Shared;
+using Bildirim.Common.Helpers;
+using Bildirim.Common;
 
 namespace Bildirim.Presentation.Api.Mappings
 {
@@ -20,6 +22,7 @@ namespace Bildirim.Presentation.Api.Mappings
             ConfigureUserMappings();
             ConfigureCampaignMappings();
             ConfigureNotificationMappings();
+            ConfigureSharedMappings();
         }
 
         public void ConfigureTypeMappings()
@@ -39,7 +42,6 @@ namespace Bildirim.Presentation.Api.Mappings
                 .ForMember(x => x.NotificationStatusTypeAdi, opt => opt.MapFrom(t => t.NotificationStatusType.Adi))
                 .ForMember(x => x.NotificationTypeName, opt => opt.MapFrom(t => t.NotificationType.Adi));
 
-
             CreateMap<NotificationVote, NotificationVoteVM>();
         }
 
@@ -50,7 +52,6 @@ namespace Bildirim.Presentation.Api.Mappings
                 .ForMember(x => x.OwnerBrandAdi, opt => opt.MapFrom(t => t.OwnerBrand.Adi))
                 .ForMember(x => x.SectorAdi, opt => opt.MapFrom(t => t.Sector.Adi))
                 .ForMember(x => x.CampaignTypeAdi, opt => opt.MapFrom(t => t.CampaignType.Adi));
-
         }
 
         public void ConfigureUserMappings()
@@ -60,6 +61,15 @@ namespace Bildirim.Presentation.Api.Mappings
                 .ForMember(x => x.StatusName, opt => opt.MapFrom(t => t.UserStatusType.Adi))
                 .ForMember(x => x.RoleId, opt => opt.MapFrom(t => t.UserRoles[0].RoleTypeId))
                 .ForMember(x => x.RoleName, opt => opt.MapFrom(t => t.UserRoles[0].RoleType.Adi));
+        }
+
+        public void ConfigureSharedMappings()
+        {
+            CreateMap<Media, MediaVM>()
+                .ForMember(x => x.Date, opt => opt.MapFrom(t => t.CreatedDateTime))
+                .ForMember(x => x.Size, opt => opt.MapFrom(t => FileHelper.GetFileSize(t.Size)))
+                .ForMember(x => x.FilePath, opt => opt.MapFrom(t => Constants.ApiUrlAddress + t.FilePath))
+                .ForMember(x => x.FileTypeName, opt => opt.MapFrom(t => t.FileType.Adi));
         }
     }
 }

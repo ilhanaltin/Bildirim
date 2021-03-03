@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Bildirim.Common.Types;
 using Bildirim.Domain.Entity.Entities.Campaigns;
+using Bildirim.Domain.Entity.Entities.Notify;
 using Bildirim.Domain.Entity.Entities.Shared;
 using Bildirim.Domain.Model.Campaigns;
 using Bildirim.Domain.Model.ReqRes;
@@ -76,6 +77,20 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
         {
             var response = new ServiceResult<CampaignResponseDetails>();
 
+            var campaign = new Campaign();
+            var notifcation = new Notification();
+
+            if (request.Id > 0)
+            {
+                campaign = _unitOfWork.CampaignRepository.GetIncluding(t => t.Id == request.Id, x => x.Notification);
+                notifcation = campaign.Notification;
+            }
+
+            _mapper.Map<CampaignPostRequest, Campaign>(request, campaign);
+
+            _mapper.Map<CampaignPostRequest, Notification>(request, notifcation);
+
+            campaign.Notification = notifcation;
             response.Status = HttpStatusCode.OK;
             return response;
         }
@@ -154,42 +169,6 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
             }
 
             return response;
-        }
-
-        [HttpGet("GetBrands")]
-        public ServiceResult<BrandResponseDetails> GetBrands([FromQuery] GetBrandRequest request)
-        {
-            var response = new ServiceResult<BrandResponseDetails>();
-
-            var brands = _unitOfWork.BrandRepository.GetAll()
-                .Where(t => t.CountryId == request.CountryId)
-                .ToList();
-
-            var brandsVM = _mapper.Map<List<Brand>, List<TypeVM>>(brands);
-
-            response.Status = HttpStatusCode.OK;
-            response.Result.Brands = brandsVM;
-
-            response.Status = HttpStatusCode.OK;
-            return response;
-        }
-
-        [HttpGet("GetSectors")]
-        public ServiceResult<SectorResponseDetails> GetSectors([FromQuery] GetSectorRequest request)
-        {
-            var response = new ServiceResult<SectorResponseDetails>();
-
-            var sectors = _unitOfWork.SectorRepository.GetAll()
-                .Where(t => t.CountryId == request.CountryId)
-                .ToList();
-
-            var sectorsVM = _mapper.Map<List<Sector>, List<TypeVM>>(sectors);
-
-            response.Status = HttpStatusCode.OK;
-            response.Result.Sectors = sectorsVM;
-
-            response.Status = HttpStatusCode.OK;
-            return response;
-        }
+        }        
     }
 }

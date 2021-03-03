@@ -2,6 +2,8 @@
 using Bildirim.Common;
 using Bildirim.Common.Types;
 using Bildirim.Domain.Entity.Entities.Authorization;
+using Bildirim.Domain.Entity.Entities.Campaigns;
+using Bildirim.Domain.Entity.Entities.Notify;
 using Bildirim.Domain.Model.ReqRes;
 
 namespace Bildirim.Presentation.Api.Mappings
@@ -11,6 +13,8 @@ namespace Bildirim.Presentation.Api.Mappings
         public DTOToDomain()
         {
             ConfigureUserMappings();
+            ConfigureCampaignMappings();
+            ConfigureNotificationMappings();
         }
 
         public void ConfigureUserMappings()
@@ -18,6 +22,16 @@ namespace Bildirim.Presentation.Api.Mappings
             CreateMap<RegisterRequest, User>()
                 .ForMember(x => x.UserStatusTypeId, opt => opt.MapFrom(t => Constants.USER_STATUS_WAITING_ACTIVATION))
                 .ForMember(x => x.UserRoles, opt => opt.Ignore());
+        }
+
+        public void ConfigureCampaignMappings()
+        {
+            CreateMap<CampaignPostRequest, Campaign>();
+        }
+
+        public void ConfigureNotificationMappings()
+        {
+            CreateMap<CampaignPostRequest, Notification>();
         }
     }
 }

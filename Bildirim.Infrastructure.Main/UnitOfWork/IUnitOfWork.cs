@@ -34,6 +34,8 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
         #region Shared
 
         ISectorRepository SectorRepository { get; }
+        ICityRepository CityRepository { get; }
+        ICountyRepository CountyRepository { get; }
         IBrandRepository BrandRepository { get; }
 
         IMediaRepository MediaRepository { get; }

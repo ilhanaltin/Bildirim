@@ -31,6 +31,8 @@ namespace Bildirim.Presentation.Api.Mappings
             CreateMap<UserStatusType, TypeVM>();
             CreateMap<Brand, TypeVM>();
             CreateMap<Sector, TypeVM>();
+            CreateMap<City, CityVM>();
+            CreateMap<County, CountyVM>();
         }
 
         public void ConfigureNotificationMappings()

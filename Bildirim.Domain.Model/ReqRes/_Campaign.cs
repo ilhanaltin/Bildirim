@@ -87,24 +87,4 @@ namespace Bildirim.Domain.Model.ReqRes
 
         public long NotificationStatusTypeId { get; set; }
     }
-
-    public class GetBrandRequest
-    {
-        public long CountryId { get; set; }
-    }
-
-    public class BrandResponseDetails
-    {
-        public List<TypeVM> Brands { get; set; }
-    }
-
-    public class GetSectorRequest
-    {
-        public long CountryId { get; set; }
-    }
-
-    public class SectorResponseDetails
-    {
-        public List<TypeVM> Sectors { get; set; }
-    }
 }

@@ -196,6 +196,34 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
             }
         }
 
+        private ICityRepository _CityRepository;
+
+        public ICityRepository CityRepository
+        {
+            get
+            {
+                if (this._CityRepository == null)
+                {
+                    this._CityRepository = new CityRepository(_context);
+                }
+                return _CityRepository;
+            }
+        }
+
+        private ICountyRepository _CountyRepository;
+
+        public ICountyRepository CountyRepository
+        {
+            get
+            {
+                if (this._CountyRepository == null)
+                {
+                    this._CountyRepository = new CountyRepository(_context);
+                }
+                return _CountyRepository;
+            }
+        }
+
         #endregion
 
         #region Types

@@ -38,7 +38,8 @@ namespace Bildirim
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4000",
+                    builder.WithOrigins("https://admin.bildirmatik.com",
+                                        "http://localhost:4000",
                                         "http://localhost:4200",
                                         "http://localhost:4500")
                                         .AllowAnyHeader()

@@ -91,7 +91,39 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
             _mapper.Map<CampaignPostRequest, Notification>(request, notifcation);
 
             campaign.Notification = notifcation;
+
+            _unitOfWork.StartTransaction();
+
+            try
+            {
+                if (request.Id > 0)
+                {
+                    _unitOfWork.NotificationRepository.Update(notifcation);
+
+                    _unitOfWork.CampaignRepository.Update(campaign);
+                }
+                else
+                {
+
+                    _unitOfWork.NotificationRepository.Add(notifcation);
+
+                    _unitOfWork.CampaignRepository.Add(campaign);
+                }
+
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+
+                response.Status = HttpStatusCode.InternalServerError;
+
+                return response;
+            }
+
+            var campaignVM = _mapper.Map<Campaign, CampaignVM>(campaign);
+
             response.Status = HttpStatusCode.OK;
+            response.Result.Campaign = campaignVM;
             return response;
         }
 

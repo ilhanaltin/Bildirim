@@ -26,12 +26,15 @@ namespace Bildirim.Presentation.Api.Mappings
 
         public void ConfigureCampaignMappings()
         {
-            CreateMap<CampaignPostRequest, Campaign>();
+            CreateMap<CampaignPostRequest, Campaign>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+
         }
 
         public void ConfigureNotificationMappings()
         {
-            CreateMap<CampaignPostRequest, Notification>();
+            CreateMap<CampaignPostRequest, Notification>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
         }
     }
 }

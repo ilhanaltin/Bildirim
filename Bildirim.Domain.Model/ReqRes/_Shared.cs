@@ -11,11 +11,13 @@ namespace Bildirim.Domain.Model.ReqRes
     public class GetBrandRequest
     {
         public long CountryId { get; set; }
+        public long SectorId { get; set; }
+        public long? UserId { get; set; }
     }
 
     public class BrandResponseDetails
     {
-        public List<TypeVM> Brands { get; set; }
+        public List<BrandVM> Brands { get; set; }
     }
 
     public class GetSectorRequest

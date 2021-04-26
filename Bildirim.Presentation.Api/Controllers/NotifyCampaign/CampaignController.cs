@@ -53,7 +53,18 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
                 campaignsQuery = campaignsQuery.Where(t => t.OwnerBrandId == request.OwnerBrandId);
             }
 
+            /*if (request.BrandId.HasValue && request.BrandId.Value > 0)
+            {
+                campaignsQuery = campaignsQuery.Where(t => t.BrandId == request.BrandId);
+            }
+
+            if (request.SectorId.HasValue && request.SectorId.Value > 0)
+            {
+                campaignsQuery = campaignsQuery.Where(t => t.SectorId == request.SectorId);
+            }*/
+
             var paging = new PagingVM();
+            
             paging.TotalCount = campaignsQuery.Count();
             paging.TotalPage = Math.Ceiling(((decimal)paging.TotalCount / request.ItemCount));
             paging.CurrentPage = request.PageId;
@@ -201,6 +212,28 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
             }
 
             return response;
-        }        
+        }
+
+        [HttpPost("UpdateUserFavorites")]
+        public ServiceResult<StandartResponseDetails> UpdateUserFavorites([FromBody] UpdateUserFavoritesRequest request)
+        {
+            var response = new ServiceResult<StandartResponseDetails>();
+
+            var favoriteItem = _unitOfWork.UserFavoriteCategoriesRepository
+                .Get(t => t.SectorId == request.SectorId && t.BrandId == request.BrandId && t.UserId == request.UserId);
+
+            if(favoriteItem != null && favoriteItem.Id > 0)
+            {
+                _unitOfWork.UserFavoriteCategoriesRepository.Remove(favoriteItem);
+            }
+            else
+            {
+               var favoriteCategory = _mapper.Map<UpdateUserFavoritesRequest, UserFavoriteCategories>(request);
+                _unitOfWork.UserFavoriteCategoriesRepository.Add(favoriteCategory);
+            }
+            response.Status = HttpStatusCode.OK;
+
+            return response;
+        }
     }
 }

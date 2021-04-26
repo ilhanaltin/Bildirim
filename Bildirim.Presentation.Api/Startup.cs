@@ -40,6 +40,8 @@ namespace Bildirim
                 {
                     builder.WithOrigins("https://admin.bildirmatik.com",
                                         "http://localhost:4000",
+                                        "http://localhost:8000",
+                                        "http://localhost:8100",
                                         "http://localhost:4200",
                                         "http://localhost:4500")
                                         .AllowAnyHeader()

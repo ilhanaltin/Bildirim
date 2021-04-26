@@ -150,6 +150,20 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
             }
         }
 
+        private IUserFavoriteCategoriesRepository _UserFavoriteCategoriesRepository;
+
+        public IUserFavoriteCategoriesRepository UserFavoriteCategoriesRepository
+        {
+            get
+            {
+                if (this._UserFavoriteCategoriesRepository == null)
+                {
+                    this._UserFavoriteCategoriesRepository = new UserFavoriteCategoriesRepository(_context);
+                }
+                return _UserFavoriteCategoriesRepository;
+            }
+        }
+
         #endregion
 
         #region Shared

@@ -16,8 +16,9 @@ namespace Bildirim.Domain.Model.ReqRes
         public int ItemCount { get; set; }
         public int PageId { get; set; }
         public int? NotificationStatusId { get; set; }
-
         public int? OwnerBrandId { get; set; }
+        public int? BrandId { get; set; }
+        public int? SectorId { get; set; }
     }
 
     public class CampaignListResponseDetails

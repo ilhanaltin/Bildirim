@@ -6,7 +6,9 @@ using Bildirim.Domain.Model.Shared;
 using Bildirim.Domain.Model.Types;
 using Bildirim.Infrastructure.Main.UnitOfWork;
 using EasyCaching.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -26,15 +28,88 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
         }
 
         [HttpGet("GetBrands")]
+        [AllowAnonymous]
         public ServiceResult<BrandResponseDetails> GetBrands([FromQuery] GetBrandRequest request)
         {
             var response = new ServiceResult<BrandResponseDetails>();
 
             var brands = _unitOfWork.BrandRepository.GetAll()
                 .Where(t => t.CountryId == request.CountryId)
+                .OrderBy(x=> x.Adi)
                 .ToList();
 
-            var brandsVM = _mapper.Map<List<Brand>, List<TypeVM>>(brands);
+            var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
+
+            response.Status = HttpStatusCode.OK;
+            response.Result.Brands = brandsVM;
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpGet("GetBrandsOfSector")]
+        [AllowAnonymous]
+        public ServiceResult<BrandResponseDetails> GetBrandsOfSector([FromQuery] GetBrandRequest request)
+        {
+            var response = new ServiceResult<BrandResponseDetails>();
+
+            var brands = _unitOfWork.CampaignRepository.GetAll()
+                .Where(t => t.BrandId != null && t.SectorId == request.SectorId)
+                .Include(x=>x.Brand)
+                .Select(column => new Brand
+                {
+                    Id = column.Brand.Id,
+                    Adi = column.Brand.Adi
+                })
+                .Distinct()
+                .OrderBy(x => x.Adi)
+                .ToList();
+
+            var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
+
+            if(request.UserId.HasValue && request.UserId.Value >0)
+            {
+                var favorites = _unitOfWork.UserFavoriteCategoriesRepository
+                .GetAll()
+                .Where(t => t.SectorId == request.SectorId
+                        && t.UserId == request.UserId)
+                .ToList();
+
+                foreach (var fav in favorites)
+                {
+                    var itemIndex = brandsVM.FindIndex(x => x.Id == fav.BrandId);
+                    var item = brandsVM.ElementAt(itemIndex);
+                    item.IsFavorite = true;
+                }
+            }
+
+            response.Status = HttpStatusCode.OK;
+            response.Result.Brands = brandsVM;
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpGet("GetFavoriteBrands")]
+        [AllowAnonymous]
+        public ServiceResult<BrandResponseDetails> GetFavoriteBrands([FromQuery] GetBrandRequest request)
+        {
+            var response = new ServiceResult<BrandResponseDetails>();
+
+            var favorites = _unitOfWork.UserFavoriteCategoriesRepository
+                .GetAll()
+                .Where(t => t.UserId == request.UserId)
+                .Select(x=>x.Id)
+                .ToList();
+
+            var brands = _unitOfWork.BrandRepository.GetAll()
+                .Where(t => favorites.Contains(t.Id))
+                .OrderBy(x => x.Adi)
+                .ToList();
+
+            var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
+
+            brandsVM = brandsVM.Select(t => { t.IsFavorite = true; return t; }).ToList();
 
             response.Status = HttpStatusCode.OK;
             response.Result.Brands = brandsVM;
@@ -44,12 +119,14 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
         }
 
         [HttpGet("GetSectors")]
+        [AllowAnonymous]
         public ServiceResult<SectorResponseDetails> GetSectors([FromQuery] GetSectorRequest request)
         {
             var response = new ServiceResult<SectorResponseDetails>();
 
             var sectors = _unitOfWork.SectorRepository.GetAll()
                 .Where(t => t.CountryId == request.CountryId)
+                .OrderBy(x => x.Adi)
                 .ToList();
 
             var sectorsVM = _mapper.Map<List<Sector>, List<TypeVM>>(sectors);
@@ -62,12 +139,14 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
         }
 
         [HttpGet("GetCity")]
+        [AllowAnonymous]
         public ServiceResult<CityResponseDetails> GetCity([FromQuery] GetCityRequest request)
         {
             var response = new ServiceResult<CityResponseDetails>();
 
             var cities = _unitOfWork.CityRepository.GetAll()
                 .Where(t => t.CountryId == request.CountryId)
+                .OrderBy(x => x.Adi)
                 .ToList();
 
             var citiesVM = _mapper.Map<List<City>, List<CityVM>>(cities);
@@ -80,12 +159,14 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
         }
 
         [HttpGet("GetCounty")]
+        [AllowAnonymous]
         public ServiceResult<CountyResponseDetails> GetCounty([FromQuery] GetCountyRequest request)
         {
             var response = new ServiceResult<CountyResponseDetails>();
 
             var counties = _unitOfWork.CountyRepository.GetAll()
                 .Where(t => t.CityId == request.CityId)
+                .OrderBy(x => x.Adi)
                 .ToList();
 
             var countiesVM = _mapper.Map<List<County>, List<CountyVM>>(counties);

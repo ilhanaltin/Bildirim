@@ -646,6 +646,7 @@ namespace Bildirim.Presentation.Api.Controllers.UserManagement
             }
 
             return response;
-        }
+        }        
+        
     }
 }

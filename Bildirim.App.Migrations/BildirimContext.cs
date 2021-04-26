@@ -20,7 +20,7 @@ namespace Bildirim.App.Migrations
 
         public virtual DbSet<Notification> Notification { get; set; }
         public virtual DbSet<NotificationVote> NotificationVote { get; set; }
-        public virtual DbSet<UserFavoriteNotifications> UserFavoriteNotifications { get; set; }
+        public virtual DbSet<UserFavoriteCategories> UserFavoriteCategories { get; set; }
 
         public virtual DbSet<Campaign> Campaign { get; set; }
 

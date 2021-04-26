@@ -28,6 +28,7 @@ namespace Bildirim.Infrastructure.Main.UnitOfWork
         #region Campaign
 
         ICampaignRepository CampaignRepository { get; }
+        IUserFavoriteCategoriesRepository UserFavoriteCategoriesRepository { get; }
 
         #endregion
 

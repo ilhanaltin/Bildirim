@@ -1,4 +1,5 @@
 ﻿using Bildirim.Domain.Entities.Entity;
+using Bildirim.Domain.Entity.Entities.Campaigns;
 using Bildirim.Domain.Entity.Entities.Notify;
 using Bildirim.Domain.Entity.Entities.Types;
 using System.Collections.Generic;
@@ -37,6 +38,6 @@ namespace Bildirim.Domain.Entity.Entities.Authorization
 
         public virtual List<UserRole> UserRoles { get; set; }
 
-        public virtual List<UserFavoriteNotifications> UserFavoriteNotifications { get; set; }
+        public virtual List<UserFavoriteCategories> UserFavoriteCategories { get; set; }
     }
 }

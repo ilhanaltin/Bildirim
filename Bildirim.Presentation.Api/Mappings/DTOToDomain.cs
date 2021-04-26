@@ -29,6 +29,8 @@ namespace Bildirim.Presentation.Api.Mappings
             CreateMap<CampaignPostRequest, Campaign>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
 
+            CreateMap<UpdateUserFavoritesRequest, UserFavoriteCategories>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
         }
 
         public void ConfigureNotificationMappings()

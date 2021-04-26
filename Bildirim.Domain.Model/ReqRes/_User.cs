@@ -49,4 +49,11 @@ namespace Bildirim.Domain.Model.ReqRes
 
         public PagingVM PagingVM { get; set; }
     }
+
+    public class UpdateUserFavoritesRequest
+    {
+        public long UserId { get; set; }
+        public int SectorId { get; set; }
+        public int BrandId { get; set; }
+    }
 }

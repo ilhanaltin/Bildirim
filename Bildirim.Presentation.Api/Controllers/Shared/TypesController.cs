@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Bildirim.Common.Types;
+using Bildirim.Domain.Entity.Entities.Campaigns;
 using Bildirim.Domain.Entity.Entities.Shared;
 using Bildirim.Domain.Model.ReqRes;
 using Bildirim.Domain.Model.Shared;
@@ -92,27 +93,41 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
 
         [HttpGet("GetFavoriteBrands")]
         [AllowAnonymous]
-        public ServiceResult<BrandResponseDetails> GetFavoriteBrands([FromQuery] GetBrandRequest request)
+        public ServiceResult<BrandFavoritesResponseDetails> GetFavoriteBrands([FromQuery] GetBrandRequest request)
         {
-            var response = new ServiceResult<BrandResponseDetails>();
+            var response = new ServiceResult<BrandFavoritesResponseDetails>();
 
             var favorites = _unitOfWork.UserFavoriteCategoriesRepository
                 .GetAll()
                 .Where(t => t.UserId == request.UserId)
-                .Select(x=>x.Id)
                 .ToList();
 
-            var brands = _unitOfWork.BrandRepository.GetAll()
-                .Where(t => favorites.Contains(t.Id))
-                .OrderBy(x => x.Adi)
-                .ToList();
+            var favoritesGroupBy = favorites.GroupBy(t => t.SectorId);
 
-            var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
+            var sectorBrandList = new List<SectorBrandVM>();
 
-            brandsVM = brandsVM.Select(t => { t.IsFavorite = true; return t; }).ToList();
+            foreach (var sectorGroup in favoritesGroupBy)
+            {
+                var sectorBrand = new SectorBrandVM();
+                sectorBrand.SectorId = sectorGroup.Key;
+                sectorBrand.SectorAdi = sectorGroup.FirstOrDefault().Sector.Adi;
+
+                var ids = sectorGroup.ToList().Select(t => t.BrandId);
+
+                var brands = _unitOfWork.BrandRepository.GetAll()
+                        .Where(t => ids.Contains(t.Id))
+                        .OrderBy(x => x.Adi)
+                        .ToList();
+
+                var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
+                brandsVM = brandsVM.Select(t => { t.IsFavorite = true; return t; }).ToList();
+                sectorBrand.BrandList = brandsVM;
+
+                sectorBrandList.Add(sectorBrand);
+            }
 
             response.Status = HttpStatusCode.OK;
-            response.Result.Brands = brandsVM;
+            response.Result.SectorBrandList = sectorBrandList;
 
             response.Status = HttpStatusCode.OK;
             return response;

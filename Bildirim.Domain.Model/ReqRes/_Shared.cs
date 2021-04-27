@@ -20,6 +20,11 @@ namespace Bildirim.Domain.Model.ReqRes
         public List<BrandVM> Brands { get; set; }
     }
 
+    public class BrandFavoritesResponseDetails
+    {
+        public List<SectorBrandVM> SectorBrandList { get; set; }
+    }
+
     public class GetSectorRequest
     {
         public long CountryId { get; set; }

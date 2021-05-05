@@ -39,6 +39,7 @@ namespace Bildirim
                 builder =>
                 {
                     builder.WithOrigins("https://admin.bildirmatik.com",
+                                        "https://bildirmatik.com",
                                         "http://localhost:4000",
                                         "http://localhost:8000",
                                         "http://localhost:8100",

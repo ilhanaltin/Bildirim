@@ -41,7 +41,6 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
 
             var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
 
-            response.Status = HttpStatusCode.OK;
             response.Result.Brands = brandsVM;
 
             response.Status = HttpStatusCode.OK;
@@ -84,7 +83,6 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
                 }
             }
 
-            response.Status = HttpStatusCode.OK;
             response.Result.Brands = brandsVM;
 
             response.Status = HttpStatusCode.OK;
@@ -126,7 +124,6 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
                 sectorBrandList.Add(sectorBrand);
             }
 
-            response.Status = HttpStatusCode.OK;
             response.Result.SectorBrandList = sectorBrandList;
 
             response.Status = HttpStatusCode.OK;
@@ -146,7 +143,26 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
 
             var sectorsVM = _mapper.Map<List<Sector>, List<TypeVM>>(sectors);
 
+            response.Result.Sectors = sectorsVM;
+
             response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpGet("GetFavoriteSectors")]
+        [AllowAnonymous]
+        public ServiceResult<SectorResponseDetails> GetFavoriteSectors([FromQuery] GetSectorRequest request)
+        {
+            var response = new ServiceResult<SectorResponseDetails>();
+
+            var sectors = _unitOfWork.SectorRepository.GetAll()
+                .Where(t => t.CountryId == request.CountryId)
+                .OrderBy(x => x.Adi)
+                .Take(10)
+                .ToList();
+
+            var sectorsVM = _mapper.Map<List<Sector>, List<TypeVM>>(sectors);
+
             response.Result.Sectors = sectorsVM;
 
             response.Status = HttpStatusCode.OK;

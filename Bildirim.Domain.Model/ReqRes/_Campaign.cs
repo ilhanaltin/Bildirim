@@ -19,6 +19,12 @@ namespace Bildirim.Domain.Model.ReqRes
         public int? OwnerBrandId { get; set; }
         public int? BrandId { get; set; }
         public int? SectorId { get; set; }
+        public string SearchText { get; set; }
+    }
+
+    public class CampaignSliderListRequest
+    {
+        public int ItemCount { get; set; }
     }
 
     public class CampaignListResponseDetails

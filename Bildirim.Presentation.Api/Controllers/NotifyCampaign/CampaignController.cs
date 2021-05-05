@@ -42,6 +42,14 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
                                                                                 t => t.Notification,
                                                                                 t => t.Notification.NotificationVotes,
                                                                                 t => t.Sector);
+            if (!String.IsNullOrEmpty(request.SearchText))
+            {
+                campaignsQuery = campaignsQuery
+                    .Where(t => t.Notification.Name.Contains(request.SearchText) 
+                        || t.Brand.Adi.Contains(request.SearchText) 
+                            || t.Sector.Adi.Contains(request.SearchText)
+                                || t.DetailText.Contains(request.SearchText));
+            }
 
             if (request.NotificationStatusId.HasValue && request.NotificationStatusId.Value > 0)
             {
@@ -53,7 +61,7 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
                 campaignsQuery = campaignsQuery.Where(t => t.OwnerBrandId == request.OwnerBrandId);
             }
 
-            /*if (request.BrandId.HasValue && request.BrandId.Value > 0)
+            if (request.BrandId.HasValue && request.BrandId.Value > 0)
             {
                 campaignsQuery = campaignsQuery.Where(t => t.BrandId == request.BrandId);
             }
@@ -61,7 +69,7 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
             if (request.SectorId.HasValue && request.SectorId.Value > 0)
             {
                 campaignsQuery = campaignsQuery.Where(t => t.SectorId == request.SectorId);
-            }*/
+            }
 
             var paging = new PagingVM();
             
@@ -75,9 +83,52 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
 
             var campaignsVM = _mapper.Map<List<Campaign>, List<CampaignVM>>(campaigns);
 
-            response.Status = HttpStatusCode.OK;
             response.Result.CampaignList = campaignsVM;
             response.Result.PagingVM = paging;
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpGet("GetForSlider")]
+        public ServiceResult<CampaignListResponseDetails> GetForSlider([FromQuery] CampaignSliderListRequest request)
+        {
+            var response = new ServiceResult<CampaignListResponseDetails>();
+
+            var campaignsQuery = _unitOfWork.CampaignRepository.GetAllIncluding(x => x.Brand,
+                                                                                x => x.OwnerBrand,
+                                                                                t => t.CampaignType,
+                                                                                t => t.Notification,
+                                                                                t => t.Notification.NotificationVotes,
+                                                                                t => t.Sector);
+
+            var campaigns = campaignsQuery.OrderByDescending(o => o.Id).Take(request.ItemCount).ToList();
+
+            var campaignsVM = _mapper.Map<List<Campaign>, List<CampaignVM>>(campaigns);
+
+            response.Result.CampaignList = campaignsVM;
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpGet("GetFavoriteCategories")]
+        public ServiceResult<CampaignListResponseDetails> GetFavoriteCategories([FromQuery] CampaignSliderListRequest request)
+        {
+            var response = new ServiceResult<CampaignListResponseDetails>();
+
+            var campaignsQuery = _unitOfWork.CampaignRepository.GetAllIncluding(x => x.Brand,
+                                                                                x => x.OwnerBrand,
+                                                                                t => t.CampaignType,
+                                                                                t => t.Notification,
+                                                                                t => t.Notification.NotificationVotes,
+                                                                                t => t.Sector);
+
+            var campaigns = campaignsQuery.OrderByDescending(o => o.Id).Take(request.ItemCount).ToList();
+
+            var campaignsVM = _mapper.Map<List<Campaign>, List<CampaignVM>>(campaigns);
+
+            response.Result.CampaignList = campaignsVM;
 
             response.Status = HttpStatusCode.OK;
             return response;

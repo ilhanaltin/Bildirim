@@ -22,6 +22,12 @@ namespace Bildirim.Domain.Entity.Mapping.Shared
             builder.Property(t => t.CountryId)
                 .IsRequired()
                 .HasColumnName("COUNTRY_ID");
+
+            builder.Property(t => t.KisaAdi)
+             .HasColumnName("KISA_ADI");
+
+            builder.Property(t => t.Image)
+             .HasColumnName("IMAGE");
         }
     }
 }

@@ -30,10 +30,10 @@ namespace Bildirim.Domain.Model.ReqRes
         public long CountryId { get; set; }
     }
 
-    public class SectorResponseDetails
+    public class SectorListResponseDetails
     {
-        public List<TypeVM> Sectors { get; set; }
-    }
+        public List<SectorVM> Sectors { get; set; }
+    }    
 
     public class GetCityRequest
     {

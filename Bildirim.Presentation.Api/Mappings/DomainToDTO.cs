@@ -30,7 +30,7 @@ namespace Bildirim.Presentation.Api.Mappings
             CreateMap<RoleType, TypeVM>();
             CreateMap<UserStatusType, TypeVM>();
             CreateMap<Brand, BrandVM>();
-            CreateMap<Sector, TypeVM>();
+            CreateMap<Sector, SectorVM>();
             CreateMap<City, CityVM>();
             CreateMap<County, CountyVM>();
         }

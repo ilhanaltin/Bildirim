@@ -9,5 +9,9 @@ namespace Bildirim.Domain.Entity.Entities.Shared
         public virtual Country Country { get; set; }
 
         public string Adi { get; set; }
+
+        public string KisaAdi { get; set; }
+
+        public string Image { get; set; }
     }
 }

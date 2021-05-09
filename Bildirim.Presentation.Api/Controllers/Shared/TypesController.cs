@@ -36,7 +36,7 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
 
             var brands = _unitOfWork.BrandRepository.GetAll()
                 .Where(t => t.CountryId == request.CountryId)
-                .OrderBy(x=> x.Adi)
+                .OrderBy(x => x.Adi)
                 .ToList();
 
             var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
@@ -55,7 +55,7 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
 
             var brands = _unitOfWork.CampaignRepository.GetAll()
                 .Where(t => t.BrandId != null && t.SectorId == request.SectorId)
-                .Include(x=>x.Brand)
+                .Include(x => x.Brand)
                 .Select(column => new Brand
                 {
                     Id = column.Brand.Id,
@@ -67,7 +67,7 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
 
             var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
 
-            if(request.UserId.HasValue && request.UserId.Value >0)
+            if (request.UserId.HasValue && request.UserId.Value > 0)
             {
                 var favorites = _unitOfWork.UserFavoriteCategoriesRepository
                 .GetAll()
@@ -132,16 +132,16 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
 
         [HttpGet("GetSectors")]
         [AllowAnonymous]
-        public ServiceResult<SectorResponseDetails> GetSectors([FromQuery] GetSectorRequest request)
+        public ServiceResult<SectorListResponseDetails> GetSectors([FromQuery] GetSectorRequest request)
         {
-            var response = new ServiceResult<SectorResponseDetails>();
+            var response = new ServiceResult<SectorListResponseDetails>();
 
             var sectors = _unitOfWork.SectorRepository.GetAll()
                 .Where(t => t.CountryId == request.CountryId)
                 .OrderBy(x => x.Adi)
                 .ToList();
 
-            var sectorsVM = _mapper.Map<List<Sector>, List<TypeVM>>(sectors);
+            var sectorsVM = _mapper.Map<List<Sector>, List<SectorVM>>(sectors);
 
             response.Result.Sectors = sectorsVM;
 
@@ -149,11 +149,41 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
             return response;
         }
 
+        [HttpGet("GetSectorsForAdmin")]
+        [AllowAnonymous]
+        public ServiceResult<SectorListResponseDetails> GetSectorsForAdmin([FromQuery] GetSectorRequest request)
+        {
+            var response = new ServiceResult<SectorListResponseDetails>();
+
+            var sectors = _unitOfWork.SectorRepository.GetAll()
+                .Where(t => t.CountryId == request.CountryId)
+                .OrderBy(x => x.Adi)
+                .ToList();
+
+            var campaignCountGroupBy = _unitOfWork.CampaignRepository.GetAll()
+                  .GroupBy(m => m.SectorId)
+                  .Select(m => new { SectorId = m.Key, CampaignCount = m.Count() });
+
+            var sectorsVM = _mapper.Map<List<Sector>, List<SectorVM>>(sectors);
+
+            foreach (var _sectorVM in sectorsVM)
+            {
+                var campCount = campaignCountGroupBy.Where(t => t.SectorId == _sectorVM.Id).FirstOrDefault();
+
+                if (campCount != null)
+                    _sectorVM.CampaignCount = campCount.CampaignCount;
+            }
+
+            response.Result.Sectors = sectorsVM;
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
         [HttpGet("GetFavoriteSectors")]
         [AllowAnonymous]
-        public ServiceResult<SectorResponseDetails> GetFavoriteSectors([FromQuery] GetSectorRequest request)
+        public ServiceResult<SectorListResponseDetails> GetFavoriteSectors([FromQuery] GetSectorRequest request)
         {
-            var response = new ServiceResult<SectorResponseDetails>();
+            var response = new ServiceResult<SectorListResponseDetails>();
 
             var sectors = _unitOfWork.SectorRepository.GetAll()
                 .Where(t => t.CountryId == request.CountryId)
@@ -161,7 +191,7 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
                 .Take(10)
                 .ToList();
 
-            var sectorsVM = _mapper.Map<List<Sector>, List<TypeVM>>(sectors);
+            var sectorsVM = _mapper.Map<List<Sector>, List<SectorVM>>(sectors);
 
             response.Result.Sectors = sectorsVM;
 

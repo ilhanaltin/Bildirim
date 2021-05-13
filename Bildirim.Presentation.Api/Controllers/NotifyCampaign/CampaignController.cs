@@ -48,7 +48,7 @@ namespace Bildirim.Presentation.Api.Controllers.NotifyCampaign
                     .Where(t => t.Notification.Name.Contains(request.SearchText) 
                         || t.Brand.Adi.Contains(request.SearchText) 
                             || t.Sector.Adi.Contains(request.SearchText)
-                                || t.DetailText.Contains(request.SearchText));
+                                || t.DetailText.Contains(request.SearchText));  
             }
 
             if (request.NotificationStatusId.HasValue && request.NotificationStatusId.Value > 0)

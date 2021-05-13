@@ -30,6 +30,14 @@ namespace Bildirim.Domain.Model.ReqRes
         public long CountryId { get; set; }
     }
 
+    public class SaveUpdateSectorRequest
+    {
+        public long? Id { get; set; }
+        public string Adi { get; set; }
+        public string KisaAdi { get; set; }
+        public string Image { get; set; }
+    }
+
     public class SectorListResponseDetails
     {
         public List<SectorVM> Sectors { get; set; }

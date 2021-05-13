@@ -28,6 +28,7 @@ namespace Bildirim.App.Migrations
         public virtual DbSet<UserLoginType> UserLoginType { get; set; }
         public virtual DbSet<RoleType> RoleType { get; set; }
         public virtual DbSet<UserStatusType> UserStatusType { get; set; }
+        public virtual DbSet<FileType> FileType { get; set; }
 
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<City> City { get; set; }

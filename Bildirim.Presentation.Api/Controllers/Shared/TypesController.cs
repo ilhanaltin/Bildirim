@@ -199,6 +199,32 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
             return response;
         }
 
+        [HttpPost("UpdateSector")]
+        public ServiceResult<StandartResponseDetails> UpdateSector([FromBody] SaveUpdateSectorRequest request)
+        {
+            var response = new ServiceResult<StandartResponseDetails>();
+            var sector = new Sector();
+
+            if(request.Id.HasValue)
+            {
+                sector = _unitOfWork.SectorRepository.Get(t => t.Id == request.Id);
+            }
+                
+            _mapper.Map<SaveUpdateSectorRequest, Sector>(request, sector);
+
+            if (request.Id > 0)
+            {
+                _unitOfWork.SectorRepository.Update(sector);
+            }
+            else
+            {
+                _unitOfWork.SectorRepository.Add(sector);
+            }
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
         [HttpGet("GetCity")]
         [AllowAnonymous]
         public ServiceResult<CityResponseDetails> GetCity([FromQuery] GetCityRequest request)

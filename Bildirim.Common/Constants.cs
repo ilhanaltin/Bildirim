@@ -171,6 +171,6 @@ namespace Bildirim.Common
             return "-";
         }
 
-        public const string ApiUrlAddress = "https://api.dolar.net/";
+        public const string ApiUrlAddress = "https://api.bildirmatik.com/";
     }
 }

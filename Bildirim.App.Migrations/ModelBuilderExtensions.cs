@@ -47,6 +47,11 @@ namespace Bildirim.App.Migrations
                new CampaignType { Id = 2, Adi = "Ticari", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
            );
 
+            modelBuilder.Entity<FileType>().HasData(
+                new FileType { Id = 1, Adi = "Resim", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null },
+                new FileType { Id = 2, Adi = "Video", CreatedDateTime = DateTime.Today, CreatedUserId = 1, UpdatedDateTime = null, UpdatedUserId = null }
+            );
+
             #endregion
 
             #region Country

@@ -4,6 +4,7 @@ using Bildirim.Common.Types;
 using Bildirim.Domain.Entity.Entities.Authorization;
 using Bildirim.Domain.Entity.Entities.Campaigns;
 using Bildirim.Domain.Entity.Entities.Notify;
+using Bildirim.Domain.Entity.Entities.Shared;
 using Bildirim.Domain.Model.ReqRes;
 
 namespace Bildirim.Presentation.Api.Mappings
@@ -37,6 +38,13 @@ namespace Bildirim.Presentation.Api.Mappings
         {
             CreateMap<CampaignPostRequest, Notification>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
+        }
+
+        public void ConfigureTypesMappings()
+        {
+            CreateMap<SaveUpdateSectorRequest, Sector>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+
         }
     }
 }

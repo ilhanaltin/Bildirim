@@ -15,7 +15,12 @@ namespace Bildirim.Domain.Model.ReqRes
         public long? UserId { get; set; }
     }
 
-    public class BrandResponseDetails
+    public class GetBrandForAdminRequest
+    {
+        public long CountryId { get; set; }
+    }
+
+    public class BrandListResponseDetails
     {
         public List<BrandVM> Brands { get; set; }
     }
@@ -23,6 +28,14 @@ namespace Bildirim.Domain.Model.ReqRes
     public class BrandFavoritesResponseDetails
     {
         public List<SectorBrandVM> SectorBrandList { get; set; }
+    }
+
+    public class SaveUpdateBrandRequest
+    {
+        public long? Id { get; set; }
+        public string Adi { get; set; }
+        public string KisaAdi { get; set; }
+        public string Image { get; set; }
     }
 
     public class GetSectorRequest

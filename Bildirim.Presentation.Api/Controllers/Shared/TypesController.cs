@@ -30,9 +30,9 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
 
         [HttpGet("GetBrands")]
         [AllowAnonymous]
-        public ServiceResult<BrandResponseDetails> GetBrands([FromQuery] GetBrandRequest request)
+        public ServiceResult<BrandListResponseDetails> GetBrands([FromQuery] GetBrandRequest request)
         {
-            var response = new ServiceResult<BrandResponseDetails>();
+            var response = new ServiceResult<BrandListResponseDetails>();
 
             var brands = _unitOfWork.BrandRepository.GetAll()
                 .Where(t => t.CountryId == request.CountryId)
@@ -47,11 +47,69 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
             return response;
         }
 
+        [HttpGet("GetBrandsForAdmin")]
+        [AllowAnonymous]
+        public ServiceResult<BrandListResponseDetails> GetBrandsForAdmin([FromQuery] GetBrandForAdminRequest request)
+        {
+            var response = new ServiceResult<BrandListResponseDetails>();
+
+            var brands = _unitOfWork.BrandRepository.GetAll()
+                .Where(t => t.CountryId == request.CountryId)
+                .OrderBy(x => x.Adi)
+                .ToList();
+
+            var campaignCountGroupBy = _unitOfWork.CampaignRepository.GetAll()
+                  .GroupBy(m => m.BrandId)
+                  .Select(m => new { BrandId = m.Key, CampaignCount = m.Count() })
+                  .ToList();
+
+            var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
+
+            foreach (var _brandVM in brandsVM)
+            {
+                var campCount = campaignCountGroupBy.Where(t => t.BrandId == _brandVM.Id).FirstOrDefault();
+
+                _brandVM.CampaignCount = 0;
+                if (campCount != null)
+                    _brandVM.CampaignCount = campCount.CampaignCount;
+            }
+
+            response.Result.Brands = brandsVM;
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpPost("UpdateBrand")]
+        public ServiceResult<StandartResponseDetails> UpdateSector([FromBody] SaveUpdateBrandRequest request)
+        {
+            var response = new ServiceResult<StandartResponseDetails>();
+            var brand = new Brand();
+
+            if (request.Id.HasValue)
+            {
+                brand = _unitOfWork.BrandRepository.Get(t => t.Id == request.Id);
+            }
+
+            _mapper.Map<SaveUpdateBrandRequest, Brand>(request, brand);
+
+            if (request.Id > 0)
+            {
+                _unitOfWork.BrandRepository.Update(brand);
+            }
+            else
+            {
+                _unitOfWork.BrandRepository.Add(brand);
+            }
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
         [HttpGet("GetBrandsOfSector")]
         [AllowAnonymous]
-        public ServiceResult<BrandResponseDetails> GetBrandsOfSector([FromQuery] GetBrandRequest request)
+        public ServiceResult<BrandListResponseDetails> GetBrandsOfSector([FromQuery] GetBrandRequest request)
         {
-            var response = new ServiceResult<BrandResponseDetails>();
+            var response = new ServiceResult<BrandListResponseDetails>();
 
             var brands = _unitOfWork.CampaignRepository.GetAll()
                 .Where(t => t.BrandId != null && t.SectorId == request.SectorId)
@@ -162,7 +220,8 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
 
             var campaignCountGroupBy = _unitOfWork.CampaignRepository.GetAll()
                   .GroupBy(m => m.SectorId)
-                  .Select(m => new { SectorId = m.Key, CampaignCount = m.Count() });
+                  .Select(m => new { SectorId = m.Key, CampaignCount = m.Count() })
+                  .ToList();
 
             var sectorsVM = _mapper.Map<List<Sector>, List<SectorVM>>(sectors);
 
@@ -170,6 +229,7 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
             {
                 var campCount = campaignCountGroupBy.Where(t => t.SectorId == _sectorVM.Id).FirstOrDefault();
 
+                _sectorVM.CampaignCount = 0;
                 if (campCount != null)
                     _sectorVM.CampaignCount = campCount.CampaignCount;
             }

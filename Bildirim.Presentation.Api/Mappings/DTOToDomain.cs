@@ -45,6 +45,8 @@ namespace Bildirim.Presentation.Api.Mappings
             CreateMap<SaveUpdateSectorRequest, Sector>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
 
+            CreateMap<SaveUpdateBrandRequest, Brand>()
+               .ForMember(x => x.Id, opt => opt.Ignore());
         }
     }
 }

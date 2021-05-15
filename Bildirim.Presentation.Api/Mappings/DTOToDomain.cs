@@ -16,6 +16,7 @@ namespace Bildirim.Presentation.Api.Mappings
             ConfigureUserMappings();
             ConfigureCampaignMappings();
             ConfigureNotificationMappings();
+            ConfigureTypesMappings();
         }
 
         public void ConfigureUserMappings()
@@ -43,10 +44,13 @@ namespace Bildirim.Presentation.Api.Mappings
         public void ConfigureTypesMappings()
         {
             CreateMap<SaveUpdateSectorRequest, Sector>()
-                .ForMember(x => x.Id, opt => opt.Ignore());
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.CountryId, opt => opt.Ignore());
 
             CreateMap<SaveUpdateBrandRequest, Brand>()
-               .ForMember(x => x.Id, opt => opt.Ignore());
+               .ForMember(x => x.Id, opt => opt.Ignore())
+               .ForMember(x => x.CountryId, opt => opt.Ignore());
+
         }
     }
 }

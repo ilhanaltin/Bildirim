@@ -10,6 +10,7 @@ using EasyCaching.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -53,15 +54,24 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
         {
             var response = new ServiceResult<BrandListResponseDetails>();
 
-            var brands = _unitOfWork.BrandRepository.GetAll()
+            var brandsQuery = _unitOfWork.BrandRepository.GetAll()
                 .Where(t => t.CountryId == request.CountryId)
-                .OrderBy(x => x.Adi)
-                .ToList();
+                .OrderBy(x => x.Adi);
 
             var campaignCountGroupBy = _unitOfWork.CampaignRepository.GetAll()
                   .GroupBy(m => m.BrandId)
                   .Select(m => new { BrandId = m.Key, CampaignCount = m.Count() })
                   .ToList();
+
+            var paging = new PagingVM();
+
+            paging.TotalCount = brandsQuery.Count();
+            paging.TotalPage = Math.Ceiling(((decimal)paging.TotalCount / request.ItemCount));
+            paging.CurrentPage = request.PageId;
+            paging.PageItemCount = request.ItemCount;
+
+            var brands = brandsQuery.OrderByDescending(o => o.Adi).Skip((request.PageId) * request.ItemCount)
+                   .Take(request.ItemCount).ToList();
 
             var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
 
@@ -74,8 +84,10 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
                     _brandVM.CampaignCount = campCount.CampaignCount;
             }
 
-            response.Result.Brands = brandsVM;
             response.Status = HttpStatusCode.OK;
+
+            response.Result.Brands = brandsVM;
+            response.Result.PagingVM = paging;
             return response;
         }
 
@@ -213,15 +225,24 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
         {
             var response = new ServiceResult<SectorListResponseDetails>();
 
-            var sectors = _unitOfWork.SectorRepository.GetAll()
+            var sectorsQuery = _unitOfWork.SectorRepository.GetAll()
                 .Where(t => t.CountryId == request.CountryId)
-                .OrderBy(x => x.Adi)
-                .ToList();
+                .OrderBy(x => x.Adi);
 
             var campaignCountGroupBy = _unitOfWork.CampaignRepository.GetAll()
                   .GroupBy(m => m.SectorId)
                   .Select(m => new { SectorId = m.Key, CampaignCount = m.Count() })
                   .ToList();
+
+            var paging = new PagingVM();
+
+            paging.TotalCount = sectorsQuery.Count();
+            paging.TotalPage = Math.Ceiling(((decimal)paging.TotalCount / request.ItemCount));
+            paging.CurrentPage = request.PageId;
+            paging.PageItemCount = request.ItemCount;
+
+            var sectors = sectorsQuery.OrderByDescending(o => o.Adi).Skip((request.PageId) * request.ItemCount)
+                   .Take(request.ItemCount).ToList();
 
             var sectorsVM = _mapper.Map<List<Sector>, List<SectorVM>>(sectors);
 
@@ -234,8 +255,11 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
                     _sectorVM.CampaignCount = campCount.CampaignCount;
             }
 
-            response.Result.Sectors = sectorsVM;
             response.Status = HttpStatusCode.OK;
+
+            response.Result.Sectors = sectorsVM;
+            response.Result.PagingVM = paging;
+
             return response;
         }
 

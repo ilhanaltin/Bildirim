@@ -17,12 +17,15 @@ namespace Bildirim.Domain.Model.ReqRes
 
     public class GetBrandForAdminRequest
     {
+        public int ItemCount { get; set; }
+        public int PageId { get; set; }
         public long CountryId { get; set; }
     }
 
     public class BrandListResponseDetails
     {
         public List<BrandVM> Brands { get; set; }
+        public PagingVM PagingVM { get; set; }
     }
 
     public class BrandFavoritesResponseDetails
@@ -40,6 +43,8 @@ namespace Bildirim.Domain.Model.ReqRes
 
     public class GetSectorRequest
     {
+        public int ItemCount { get; set; }
+        public int PageId { get; set; }
         public long CountryId { get; set; }
     }
 
@@ -54,6 +59,7 @@ namespace Bildirim.Domain.Model.ReqRes
     public class SectorListResponseDetails
     {
         public List<SectorVM> Sectors { get; set; }
+        public PagingVM PagingVM { get; set; }
     }    
 
     public class GetCityRequest

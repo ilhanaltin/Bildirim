@@ -159,9 +159,9 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
             return response;
         }
 
-        [HttpGet("GetFavoriteBrands")]
+        [HttpGet("GetFavoriteBrandsForUser")]
         [AllowAnonymous]
-        public ServiceResult<BrandFavoritesResponseDetails> GetFavoriteBrands([FromQuery] GetBrandRequest request)
+        public ServiceResult<BrandFavoritesResponseDetails> GetFavoriteBrandsForUser([FromQuery] GetBrandRequest request)
         {
             var response = new ServiceResult<BrandFavoritesResponseDetails>();
 
@@ -195,6 +195,84 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
             }
 
             response.Result.SectorBrandList = sectorBrandList;
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpGet("GetFavoriteBrandsForGeneral")]
+        [AllowAnonymous]
+        public ServiceResult<BrandListResponseDetails> GetFavoriteBrandsForGeneral([FromQuery] GetBrandRequest request)
+        {
+            var response = new ServiceResult<BrandListResponseDetails>();
+
+            var brandsQuery = from s in _unitOfWork.BrandRepository.GetAll()
+                              join f in _unitOfWork.UserFavoriteCategoriesRepository.GetAll()
+                                  on s.Id equals f.BrandId into jointable
+                              from z in jointable.DefaultIfEmpty()
+                              group z by new { Id = s.Id, Adi = s.Adi, KisaAdi = s.KisaAdi, Image = s.Image } into grp
+                              select new
+                              {
+                                  grp.Key.Id,
+                                  grp.Key.Adi,
+                                  grp.Key.KisaAdi,
+                                  grp.Key.Image,
+                                  FavoritesCount = grp.Count(x => x != null)
+                              } into selection
+                              orderby selection.FavoritesCount descending
+                              select new Brand
+                              {
+                                  Id = selection.Id,
+                                  Adi = selection.Adi,
+                                  KisaAdi = selection.KisaAdi,
+                                  Image = selection.Image,
+                              } into finalBrands
+                              select finalBrands;
+
+            var brands = brandsQuery.Take(request.ItemCount).ToList();
+
+            var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
+
+            response.Result.Brands = brandsVM;
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpGet("GetBrandsHasMostCampaigns")]
+        [AllowAnonymous]
+        public ServiceResult<BrandListResponseDetails> GetBrandsHasMostCampaigns([FromQuery] GetBrandRequest request)
+        {
+            var response = new ServiceResult<BrandListResponseDetails>();
+
+            var brandsQuery = from s in _unitOfWork.BrandRepository.GetAll()
+                              join c in _unitOfWork.CampaignRepository.GetAll()
+                                  on s.Id equals c.BrandId into jointable
+                              from z in jointable.DefaultIfEmpty()
+                              group z by new { Id = s.Id, Adi = s.Adi, KisaAdi = s.KisaAdi, Image = s.Image } into grp
+                              select new
+                              {
+                                  grp.Key.Id,
+                                  grp.Key.Adi,
+                                  grp.Key.KisaAdi,
+                                  grp.Key.Image,
+                                  CampaignsCount = grp.Count(x => x != null)
+                              } into selection
+                              orderby selection.CampaignsCount descending
+                              select new Brand
+                              {
+                                  Id = selection.Id,
+                                  Adi = selection.Adi,
+                                  KisaAdi = selection.KisaAdi,
+                                  Image = selection.Image,
+                              } into finalBrands
+                              select finalBrands;
+
+            var brands = brandsQuery.Take(request.ItemCount).ToList();
+
+            var brandsVM = _mapper.Map<List<Brand>, List<BrandVM>>(brands);
+
+            response.Result.Brands = brandsVM;
 
             response.Status = HttpStatusCode.OK;
             return response;
@@ -263,9 +341,9 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
             return response;
         }
 
-        [HttpGet("GetFavoriteSectors")]
+        [HttpGet("GetFavoriteSectorsForUsers")]
         [AllowAnonymous]
-        public ServiceResult<SectorListResponseDetails> GetFavoriteSectors([FromQuery] GetSectorRequest request)
+        public ServiceResult<SectorListResponseDetails> GetFavoriteSectorsForUsers([FromQuery] GetSectorRequest request)
         {
             var response = new ServiceResult<SectorListResponseDetails>();
 
@@ -283,17 +361,95 @@ namespace Bildirim.Presentation.Api.Controllers.Shared
             return response;
         }
 
+        [HttpGet("GetFavoriteSectorsForGeneral")]
+        [AllowAnonymous]
+        public ServiceResult<SectorListResponseDetails> GetFavoriteSectorsForGeneral([FromQuery] GetSectorRequest request)
+        {
+            var response = new ServiceResult<SectorListResponseDetails>();
+
+            var sectorsQuery = from s in _unitOfWork.SectorRepository.GetAll()
+                               join f in _unitOfWork.UserFavoriteCategoriesRepository.GetAll()
+                                   on s.Id equals f.SectorId into jointable
+                               from z in jointable.DefaultIfEmpty()
+                               group z by new { s.Id, s.Adi, s.KisaAdi, s.Image } into grp
+                               select new
+                               {
+                                   grp.Key.Id,
+                                   grp.Key.Adi,
+                                   grp.Key.KisaAdi,
+                                   grp.Key.Image,
+                                   FavoritesCount = grp.Count(x => x != null)
+                               } into selection
+                               orderby selection.FavoritesCount descending
+                               select new Sector
+                               {
+                                   Id = selection.Id,
+                                   Adi = selection.Adi,
+                                   KisaAdi = selection.KisaAdi,
+                                   Image = selection.Image,
+                               } into finalSectors
+                               select finalSectors;
+
+            var sectors = sectorsQuery.Take(request.ItemCount).ToList();
+
+            var sectorsVM = _mapper.Map<List<Sector>, List<SectorVM>>(sectors);
+
+            response.Result.Sectors = sectorsVM;
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
+        [HttpGet("GetSectorsHasMostCampaigns")]
+        [AllowAnonymous]
+        public ServiceResult<SectorListResponseDetails> GetSectorsHasMostCampaigns([FromQuery] GetSectorRequest request)
+        {
+            var response = new ServiceResult<SectorListResponseDetails>();
+
+            var sectorsQuery = from s in _unitOfWork.SectorRepository.GetAll()
+                               join c in _unitOfWork.CampaignRepository.GetAll()
+                                   on s.Id equals c.SectorId into jointable
+                               from z in jointable.DefaultIfEmpty()
+                               group z by new { s.Id, s.Adi, s.KisaAdi, s.Image } into grp
+                               select new
+                               {
+                                   grp.Key.Id,
+                                   grp.Key.Adi,
+                                   grp.Key.KisaAdi,
+                                   grp.Key.Image,
+                                   CampaignsCount = grp.Count(x => x != null)
+                               } into selection
+                               orderby selection.CampaignsCount descending
+                               select new Sector
+                               {
+                                   Id = selection.Id,
+                                   Adi = selection.Adi,
+                                   KisaAdi = selection.KisaAdi,
+                                   Image = selection.Image,
+                               } into finalSectors
+                               select finalSectors;
+
+            var sectors = sectorsQuery.Take(request.ItemCount).ToList();
+
+            var sectorsVM = _mapper.Map<List<Sector>, List<SectorVM>>(sectors);
+
+            response.Result.Sectors = sectorsVM;
+
+            response.Status = HttpStatusCode.OK;
+            return response;
+        }
+
         [HttpPost("UpdateSector")]
         public ServiceResult<StandartResponseDetails> UpdateSector([FromBody] SaveUpdateSectorRequest request)
         {
             var response = new ServiceResult<StandartResponseDetails>();
             var sector = new Sector();
 
-            if(request.Id.HasValue)
+            if (request.Id.HasValue)
             {
                 sector = _unitOfWork.SectorRepository.Get(t => t.Id == request.Id);
             }
-                
+
             _mapper.Map<SaveUpdateSectorRequest, Sector>(request, sector);
 
             if (request.Id > 0)

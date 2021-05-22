@@ -10,6 +10,7 @@ namespace Bildirim.Domain.Model.ReqRes
 {
     public class GetBrandRequest
     {
+        public int ItemCount { get; set; }
         public long CountryId { get; set; }
         public long SectorId { get; set; }
         public long? UserId { get; set; }
@@ -31,7 +32,7 @@ namespace Bildirim.Domain.Model.ReqRes
     public class BrandFavoritesResponseDetails
     {
         public List<SectorBrandVM> SectorBrandList { get; set; }
-    }
+    }   
 
     public class SaveUpdateBrandRequest
     {

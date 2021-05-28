@@ -281,8 +281,7 @@ namespace Bildirim.Presentation.Api.Controllers.UserManagement
                 return response;
             }
 
-            var user = _mapper.Map<RegisterRequest, User>(request);
-            string filePath = "Images/Profile/profile-empty.jpg";
+            var user = _mapper.Map<RegisterRequest, User>(request);           
 
             _unitOfWork.StartTransaction();
 
@@ -336,12 +335,7 @@ namespace Bildirim.Presentation.Api.Controllers.UserManagement
                 };
             }
             catch (Exception ex)
-            {
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
-
+            {               
                 response.Status = HttpStatusCode.InternalServerError;
             }
 

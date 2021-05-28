@@ -20,7 +20,7 @@ namespace Bildirim.Domain.Entity.Mapping.Authorization
 
             builder.Property(t => t.NickName)
                 .HasColumnName("NICKNAME")
-                .IsRequired();
+                .IsRequired(false);
 
             builder.Property(t => t.Password)
                 .HasColumnName("PASSWORD")

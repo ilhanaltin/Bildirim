@@ -21,6 +21,19 @@ namespace Bildirim.Domain.Model.ReqRes
         public string Email { get; set; }
     }
 
+    public class ChangeUserInfoRequest
+    {
+        public long UserId { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+    }
+
+    public class ChangeUserNotifyOptionRequest
+    {
+        public long UserId { get; set; }
+    }
+
     public class VerifyUserRequest
     {
         public string Token { get; set; }

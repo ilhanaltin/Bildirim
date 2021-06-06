@@ -13,6 +13,8 @@ namespace Bildirim.Domain.Model.Authorization
 
         public string Email { get; set; }
 
+        public bool Notify { get; set; }
+
         public long StatusId { get; set; }
 
         public string StatusName { get; set; }

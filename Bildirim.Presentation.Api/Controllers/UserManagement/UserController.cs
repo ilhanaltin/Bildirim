@@ -281,7 +281,7 @@ namespace Bildirim.Presentation.Api.Controllers.UserManagement
                 return response;
             }
 
-            var user = _mapper.Map<RegisterRequest, User>(request);           
+            var user = _mapper.Map<RegisterRequest, User>(request);
 
             _unitOfWork.StartTransaction();
 
@@ -335,7 +335,7 @@ namespace Bildirim.Presentation.Api.Controllers.UserManagement
                 };
             }
             catch (Exception ex)
-            {               
+            {
                 response.Status = HttpStatusCode.InternalServerError;
             }
 
@@ -640,7 +640,68 @@ namespace Bildirim.Presentation.Api.Controllers.UserManagement
             }
 
             return response;
-        }        
-        
+        }
+
+        [HttpPost("ChangeUserInfo")]
+        public ServiceResult<LoginResponseDetails> ChangeUserInfo([FromBody] ChangeUserInfoRequest request)
+        {
+            var response = new ServiceResult<LoginResponseDetails>();
+
+            var _user = _unitOfWork.UserRepository.Get(t => t.Email.Equals(request.Email) && t.Id != request.UserId);
+
+            if (_user != null && _user.UserLoginTypeId != Constants.USER_LOGIN_NORMAL)
+            {
+                response.Status = HttpStatusCode.Forbidden;
+                response.Messages.Add("Girdiğiniz mail ile sosyal media kaydı yapılmış. Sosyal media girişi yapınız!");
+                return response;
+            }
+
+            if (_user != null)
+            {
+                response.Status = HttpStatusCode.Conflict;
+                response.Messages.Add("Sistemde aynı mail adresiyle kullanıcı var.");
+                return response;
+            }
+
+            var user = _unitOfWork.UserRepository.GetIncluding(t => t.Id == request.UserId, x => x.UserRoles);
+
+            _mapper.Map<ChangeUserInfoRequest, User>(request, user);
+
+            _unitOfWork.UserRepository.Update(user);
+
+            var jwt = new JwtPayLoad
+            {
+                UserId = user.Id,
+                Name = user.Name,
+                LastName = user.LastName,
+                Email = user.Email,
+                RoleId = user.UserRoles[0].RoleTypeId,
+                Role = Constants.getUserRoleString(user.UserRoles[0].RoleTypeId),
+                Exp = DateTime.UtcNow.AddYears(1)
+            };
+
+            response.Result.Token = _unitOfWork.TokenRepository.GetToken(jwt);
+
+            response.Result.User = _mapper.Map<User, UserVM>(user);
+            response.Status = HttpStatusCode.OK;
+
+            return response;
+        }
+
+        [HttpPost("ChangeNotificationOption")]
+        public ServiceResult<StandartResponseDetails> ChangeNotificationOption([FromBody] ChangeUserNotifyOptionRequest request)
+        {
+            var response = new ServiceResult<StandartResponseDetails>();
+
+            var user = _unitOfWork.UserRepository.GetIncluding(t => t.Id == request.UserId);
+
+            user.Notify = !user.Notify;
+
+            _unitOfWork.UserRepository.Update(user);
+
+            response.Status = HttpStatusCode.OK;
+
+            return response;
+        }
     }
 }

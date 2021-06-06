@@ -30,6 +30,11 @@ namespace Bildirim.Domain.Entity.Mapping.Authorization
                 .HasColumnName("EMAIL")
                 .IsRequired();
 
+            builder.Property(t => t.Notify)
+               .HasColumnName("NOTIFY")
+               .IsRequired()
+               .HasDefaultValueSql("1");
+
             builder.HasOne(t => t.UserLoginType)
                 .WithMany()
                 .HasForeignKey(t => t.UserLoginTypeId)

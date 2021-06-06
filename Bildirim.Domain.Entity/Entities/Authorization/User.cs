@@ -24,6 +24,8 @@ namespace Bildirim.Domain.Entity.Entities.Authorization
 
         public string Email { get; set; }
 
+        public bool Notify { get; set; }
+
         public long UserLoginTypeId { get; set; }
 
         public virtual UserLoginType UserLoginType { get; set; }

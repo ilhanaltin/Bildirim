@@ -207,16 +207,25 @@ namespace Bildirim.Common.Helpers
 
         public static async Task SentRecoverMail(VerificationRequest request)
         {
-            MailMessage mesaj = new MailMessage();
-            mesaj.From = new MailAddress("destek@dolar.net", "Dolar.net - Şifre Yenile");
-            mesaj.To.Add(request.Email);
-            mesaj.Subject = "Dolar.Net";
-            mesaj.Body = GetPasswordRecoverEmailHtml(request);
-            mesaj.IsBodyHtml = true; // giden mailin içeriği html olmasını istiyorsak true kalması lazım
-            SmtpClient client = new SmtpClient("smtp.yandex.ru", 587);
-            client.Credentials = new NetworkCredential("destek@dolar.net", "J8Arn73N");
-            client.EnableSsl = true;
-            await client.SendMailAsync(mesaj);
+            try
+            {
+                MailMessage mesaj = new MailMessage();
+                mesaj.From = new MailAddress("destek@soltrabilisim.com.tr", "Fırsatçı - Şifre Yenile");
+                mesaj.To.Add(request.Email);
+                mesaj.Subject = "Fırsatçı - Şifre Yenile";
+                mesaj.Body = GetPasswordRecoverEmailHtml(request);
+                mesaj.IsBodyHtml = true; // giden mailin içeriği html olmasını istiyorsak true kalması lazım
+                SmtpClient client = new SmtpClient("smtp.yandex.com.tr", 587);
+                client.Credentials = new NetworkCredential("destek@soltrabilisim.com.tr", "9jrMXNzv");
+                client.EnableSsl = true;
+                await client.SendMailAsync(mesaj);
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
+            
         }
 
         public static string GetPasswordRecoverEmailHtml(VerificationRequest request)
@@ -308,8 +317,7 @@ namespace Bildirim.Common.Helpers
             mystringbuilder.Append("                      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"max-width: 500px;border-bottom: 1px solid #e4e4e4 ;\">\n");
             mystringbuilder.Append("                        <tbody>\n");
             mystringbuilder.Append("                          <tr>\n");
-            mystringbuilder.Append("                            <td bgcolor=\"#ffffff\" align=\"left\" valign=\"middle\" style=\"padding: 0px; color: #111111; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; line-height: 62px;padding:0 0 15px 0;\"><a href=\"https://app.avocode.com\" target=\"_blank\"><img width=\"192\" height=\"59\" alt=\"logo\" src=\"https://dolar.net/assets/images/logo/Bildirim_logo.png\" ></a></td>\n");
-            mystringbuilder.Append("                            <td bgcolor=\"#ffffff\" align=\"right\" valign=\"middle\" style=\"padding: 0px; color: #111111; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; line-height: 48px;padding:0 0 15px 0;\"><a href=\"https://dolar.net/login\" target=\"_blank\" style=\"font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #797979;font-size: 12px;font-weight:400;-webkit-font-smoothing:antialiased;text-decoration: none;\">Giriş Yap: dolar.net</a></td>\n");
+            mystringbuilder.Append("                            <td bgcolor=\"#ffffff\" align=\"left\" valign=\"middle\" style=\"padding: 0px; color: #111111; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; line-height: 62px;padding:0 0 15px 0;\"><a href=\"https://app.avocode.com\" target=\"_blank\"><img width=\"192\" height=\"59\" alt=\"logo\" src=\"https://api.bildirmatik.com/Images/Media/2021/6/firsatci-logo.PNG\"></a></td>\n");            
             mystringbuilder.Append("                          </tr>\n");
             mystringbuilder.Append("                        </tbody>\n");
             mystringbuilder.Append("                      </table><!--[if (gte mso 9)|(IE)]></td></tr></table>\n");
@@ -325,7 +333,7 @@ namespace Bildirim.Common.Helpers
             mystringbuilder.Append("                        <tbody>\n");
             mystringbuilder.Append("                          <tr>\n");
             mystringbuilder.Append("                            <td bgcolor=\"#ffffff\" align=\"left\" style=\"padding: 20px 0 0 0; color: #666666; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400;-webkit-font-smoothing:antialiased;\">\n");
-            mystringbuilder.Append("                                                <p class=\"headingMobile\" style=\"margin: 0;color: #171717;font-size: 26px;font-weight: 200;line-height: 130%;margin-bottom:5px;\">Dolar.Net'e giriş şifrenizi yeniden oluşturmak için aşağıdaki yönergeleri takip uygulayın.</p>\n");
+            mystringbuilder.Append("                                                <p class=\"headingMobile\" style=\"margin: 0;color: #171717;font-size: 26px;font-weight: 200;line-height: 130%;margin-bottom:5px;\">FIRSATÇI'ya giriş şifrenizi yeniden oluşturmak için aşağıdaki yönergeleri uygulayın.</p>\n");
             mystringbuilder.Append("                            </td>\n");
             mystringbuilder.Append("                          </tr>\n");
             mystringbuilder.Append("                                            <tr>\n");
@@ -333,26 +341,16 @@ namespace Bildirim.Common.Helpers
             mystringbuilder.Append("                                            </tr>\n");
             mystringbuilder.Append("                          <tr>\n");
             mystringbuilder.Append("                            <td bgcolor=\"#ffffff\" align=\"left\" style=\"padding:0; color: #666666; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400;-webkit-font-smoothing:antialiased;\">\n");
-            mystringbuilder.Append("                                                <p style=\"margin:0;color:#585858;font-size:14px;font-weight:400;line-height:170%;\">Dolar.Net'i seçtiğiniz için teşekkür ederiz.</p>\n");
+            mystringbuilder.Append("                                                <p style=\"margin:0;color:#585858;font-size:14px;font-weight:400;line-height:170%;\">FIRSATÇI'yı seçtiğiniz için teşekkür ederiz.</p>\n");
             mystringbuilder.Append("                                                <p style=\"margin:0;margin-top:20px;line-height:0;\"></p>\n");
-            mystringbuilder.Append("                                                <p style=\"margin:0;color:#585858;font-size:14px;font-weight:400;line-height:170%;\">Lütfen aşağıdaki düğmeye tıklayarak şifrenizi yeniden oluşturun veya bu bağlantıyı kullanın <a style='color: #00bc87;text-decoration: underline;' target='_blank' href='https://dolar.net/new-password/" + request.Token + "'>https://dolar.net/new-password/" + request.Token + "</a></p>\n");
+            mystringbuilder.Append("                                                <p style=\"margin:0;color:#585858;font-size:14px;font-weight:400;line-height:170%;\">Lütfen aşağıdaki kodu kullanarak şifrenizi yeniden oluşturun</p>\n");
             mystringbuilder.Append("                            </td>\n");
             mystringbuilder.Append("                          </tr>\n");
-            mystringbuilder.Append("                                            <tr>\n");
-            mystringbuilder.Append("                                              <td align=\"center\">\n");
-            mystringbuilder.Append("                                                <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
-            mystringbuilder.Append("                                                  <tr>\n");
-            mystringbuilder.Append("                                                    <td align=\"center\" style=\"padding: 33px 0 33px 0;\">\n");
-            mystringbuilder.Append("                                                      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\">\n");
-            mystringbuilder.Append("                                                        <tr>\n");
-            mystringbuilder.Append("                                                          <td align=\"center\" style=\"border-radius: 4px;\" bgcolor=\"#00bc87\"><a href=\"https://dolar.net/new-password/" + request.Token + "\" style=\"text-transform:uppercase;background:#00bc87;font-size: 13px; font-weight: 700; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none !important; padding: 20px 25px; border-radius: 4px; border: 1px solid #00bc87; display: block;-webkit-font-smoothing:antialiased;\" target=\"_blank\"><span style=\"color: #ffffff;text-decoration: none;\">Şifremi Yeniden Oluştur</span></a></td>\n");
-            mystringbuilder.Append("                                                        </tr>\n");
-            mystringbuilder.Append("                                                      </table>\n");
-            mystringbuilder.Append("                                                    </td>\n");
-            mystringbuilder.Append("                                                  </tr>\n");
-            mystringbuilder.Append("                                                </table>\n");
-            mystringbuilder.Append("                                              </td>\n");
-            mystringbuilder.Append("                                            </tr>\n");
+            mystringbuilder.Append("                          <tr>\n");
+            mystringbuilder.Append("                            <td bgcolor=\"#ffffff\" align=\"left\" style=\"padding: 20px 0 0 0; color: #666666; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400;-webkit-font-smoothing:antialiased;\">\n");
+            mystringbuilder.Append("                                                <p class=\"headingMobile\" style=\"margin: 0;color: #171717;font-size: 26px;font-weight: 200;line-height: 130%;margin-bottom:5px;\">" + request.Token + "</p>\n");
+            mystringbuilder.Append("                            </td>\n");
+            mystringbuilder.Append("                          </tr>\n");
             mystringbuilder.Append("                        </tbody>\n");
             mystringbuilder.Append("                      </table><!--[if (gte mso 9)|(IE)]></td></tr></table>\n");
             mystringbuilder.Append("<![endif]-->\n");
@@ -367,7 +365,7 @@ namespace Bildirim.Common.Helpers
             mystringbuilder.Append("                        <tbody>\n");
             mystringbuilder.Append("                          <tr>\n");
             mystringbuilder.Append("                            <td bgcolor=\"#ffffff\" align=\"center\" style=\"padding: 30px 0 30px 0; color: #666666; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 18px;\">\n");
-            mystringbuilder.Append("                                                <p style=\"margin: 0;color: #585858;font-size: 12px;font-weight: 400;-webkit-font-smoothing:antialiased;line-height: 170%;\">Yardım için? <a href=\"mailto:info@dolar.net\" style=\"color: #00bc87;text-decoration: underline;\" target=\"_blank\">info@dolar.net</a> adresine mail atabilirsiniz.</p>\n");
+            mystringbuilder.Append("                                                <p style=\"margin: 0;color: #585858;font-size: 12px;font-weight: 400;-webkit-font-smoothing:antialiased;line-height: 170%;\">Yardım için? <a href=\"mailto:info@soltrabilisim.com.tr\" style=\"color: #00bc87;text-decoration: underline;\" target=\"_blank\">info@soltrabilisim.com.tr</a> adresine mail atabilirsiniz.</p>\n");
             mystringbuilder.Append("                                                <tr>\n");
             mystringbuilder.Append("                                                  <td bgcolor=\"#ffffff\" align=\"center\" style=\"padding: 0; color: #666666; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 18px;\">\n");
             mystringbuilder.Append("                                                    <p style=\"margin: 0;color: #585858;font-size: 12px;font-weight: 400;-webkit-font-smoothing:antialiased;line-height: 170%;\"></p>\n");
@@ -375,7 +373,7 @@ namespace Bildirim.Common.Helpers
             mystringbuilder.Append("                                                </tr>\n");
             mystringbuilder.Append("                                                <tr>\n");
             mystringbuilder.Append("                                                  <td bgcolor=\"#ffffff\" align=\"center\" style=\"padding: 15px 0 30px 0; color: #666666; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 18px;\">\n");
-            mystringbuilder.Append("                                                    <p style=\"margin: 0;color: #585858;font-size: 12px;font-weight: 400;-webkit-font-smoothing:antialiased;line-height: 170%;\">Dolar.Net</p>\n");
+            mystringbuilder.Append("                                                    <p style=\"margin: 0;color: #585858;font-size: 12px;font-weight: 400;-webkit-font-smoothing:antialiased;line-height: 170%;\">FIRSATÇI</p>\n");
             mystringbuilder.Append("                                                  </td>\n");
             mystringbuilder.Append("                                                </tr>\n");
             mystringbuilder.Append("                            </td>\n");

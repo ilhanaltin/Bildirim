@@ -390,9 +390,13 @@ namespace Bildirim.Presentation.Api.Controllers.UserManagement
 
             if (user != null)
             {
+                Random r = new Random();
+                int randNum = r.Next(1000000);
+                string sixDigitNumber = randNum.ToString("D6");
+
                 var verifyUser = new UserVerification
                 {
-                    Token = Guid.NewGuid().ToString(),
+                    Token = sixDigitNumber,
                     UserId = user.Id
                 };
 

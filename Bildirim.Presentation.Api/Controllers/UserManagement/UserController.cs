@@ -44,12 +44,12 @@ namespace Bildirim.Presentation.Api.Controllers.UserManagement
                 return response;
             }
 
-            if (user.UserStatusTypeId == Constants.USER_STATUS_WAITING_ACTIVATION)
+            /*if (user.UserStatusTypeId == Constants.USER_STATUS_WAITING_ACTIVATION)
             {
                 response.Status = HttpStatusCode.Forbidden;
                 response.Messages.Add("Üyeliğiniz aktive edilmemiş. Size gönderilen aktivasyon mailindeki yönergeleri uygulayarak üyeliğinizi aktive ediniz.");
                 return response;
-            }
+            }*/
 
             var userRole = user.UserRoles.FirstOrDefault(t => t.UserId == user.Id);
 
